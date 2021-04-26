@@ -14,12 +14,16 @@ import os
 import requests
 import json
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Define a business ID
 business_id = '4AErMBEoNzbk7Q8g45kKaQ'
 unix_time = 1546047836
 
 # Define my API Key, My Endpoint, and My Header
 API_KEY = os.environ.get("YELP_API_KEY")
+
 #ENDPOINT = 'https://api.yelp.com/v3/businesses/{}'.format(business_id)
 ENDPOINT = 'https://api.yelp.com/v3/businesses/search'
 HEADERS = {'Authorization': 'bearer %s' % API_KEY}
@@ -45,12 +49,18 @@ response = requests.get(url = ENDPOINT,
                         headers = HEADERS)
 
 # Conver the JSON String to a dictionary
-business_data = response.json()
-print(business_data.keys())
+parsed_response = json.loads(response.text)
+businesses = parsed_response["businesses"]
+#business_data = response.json()
+#print(parsed_response.keys())
+#print(parsed_response)
 
-
-for biz in business_data['businesses']:
+for biz in businesses:
     print(biz['name'])
+
+
+#for biz in business_data['businesses']:
+#    print(biz['name'])
 # print the response
 #print(json.dumps(business_data, indent = 3))
 
