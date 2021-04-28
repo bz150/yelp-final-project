@@ -17,6 +17,20 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
+
+def get_response(response_endpoint, response_parameters, response_headers):
+    # Make a request to the Yelp API
+    response = requests.get(url = response_endpoint,
+                            params = response_parameters,
+                            headers = response_headers)
+
+    # Conver the JSON String to a dictionary
+    parsed_response = json.loads(response.text)
+    businesses_list = parsed_response["businesses"]
+    return businesses_list
+
+
+
 # Define a business ID
 business_id = '4AErMBEoNzbk7Q8g45kKaQ'
 unix_time = 1546047836
@@ -25,12 +39,28 @@ unix_time = 1546047836
 API_KEY = os.environ.get("YELP_API_KEY")
 
 #ENDPOINT = 'https://api.yelp.com/v3/businesses/{}'.format(business_id)
-ENDPOINT = 'https://api.yelp.com/v3/businesses/search'
-HEADERS = {'Authorization': 'bearer %s' % API_KEY}
+link_endpoint = 'https://api.yelp.com/v3/businesses/search'
+link_headers = {'Authorization': 'bearer %s' % API_KEY}
+
+#INPUTS - read in user inputs
+destination = input("Where is the destination of your vacation?")
+days = input("How many days is your vacation?")
+price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
+#for testing, change later
+#Create list for food preferences
+food_variable = True
+food_list = []
+while food_variable == True:
+    food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian?")
+    food_list.append(food_preference)
+    if food_preference == "DONE":
+        food_variable = False
+
+
 
 # Define my parameters of the search
 # BUSINESS SEARCH PARAMETERS - EXAMPLE
-PARAMETERS = {'term': 'food',
+link_parameters = {'term': 'food',
               'limit': 50,
               'offset': 50, #basically lets you do pages
               'radius': 10000,
@@ -43,20 +73,57 @@ PARAMETERS = {'term': 'food',
 #              'state': 'CA',
 #              'country': 'US'}
 
-# Make a request to the Yelp API
-response = requests.get(url = ENDPOINT,
-                        params = PARAMETERS,
-                        headers = HEADERS)
 
-# Conver the JSON String to a dictionary
-parsed_response = json.loads(response.text)
-businesses = parsed_response["businesses"]
+#businesses = parsed_response["businesses"]
 #business_data = response.json()
 #print(parsed_response.keys())
 #print(parsed_response)
 
-for biz in businesses:
+#for biz in businesses:
+#    print(biz['name'])
+
+
+#Create list for price
+prices = []
+counter_price = len(price_limit)
+for num in range(0,counter_price):
+    prices.append(str(num + 1))
+
+
+
+
+
+#OUPUT - list for breakfast
+breakfast = []
+breakfast_parameters = {'term': 'breakfast',
+              'limit': 50, 
+              'offset': 50, #basically lets you do pages
+              'price': prices, #can change this later
+              'radius': 10000, #Change later?
+              'categories': food_list,
+              'location': destination}
+
+
+business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
+print(business_list[0].keys())
+
+for biz in business_list:
     print(biz['name'])
+    print(biz['categories'])
+
+
+
+
+
+
+
+
+
+#OUPUT - list for lunch
+
+#OUPUT - list for dinner
+
+
 
 
 #for biz in business_data['businesses']:
