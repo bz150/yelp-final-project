@@ -29,8 +29,6 @@ def get_response(response_endpoint, response_parameters, response_headers):
     businesses_list = parsed_response["businesses"]
     return businesses_list
 
-
-
 # Define a business ID
 business_id = '4AErMBEoNzbk7Q8g45kKaQ'
 unix_time = 1546047836
@@ -46,7 +44,9 @@ link_headers = {'Authorization': 'bearer %s' % API_KEY}
 destination = input("Where is the destination of your vacation?")
 days = input("How many days is your vacation?")
 
-# Capturing Errors for Price Limit inputs: 
+# Capturing Errors for Price Limit inputs:
+# Condense and make more efficient later 
+ 
 while True: 
     price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
     counter_price = len(price_limit)
@@ -106,8 +106,6 @@ for num in range(0,counter_price):
     prices.append(str(num + 1))
 
 
-
-
 #OUPUT - list for breakfast
 breakfast = []
 breakfast_parameters = {'term': 'breakfast',
@@ -119,29 +117,22 @@ breakfast_parameters = {'term': 'breakfast',
               'location': destination}
 
 
-# compile this price properly 
-
-
 business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
-#print(business_list[0].keys())
 
+# Capturing errors for business list (if no responses were found, business list would = 0)
 while True: 
     if len(business_list)==0:
         print("No results for your criteria were found. Please try again!")
         break
-    else:
-        print(business_list[0].keys())
+    else: 
         break
 
 
-# if list index is out of range, we want to return an error: not found
-
-
 for biz in business_list:
-    print(biz['name'])
-    print(biz['categories'])
-    # if we input 2+ categories, Yelp will search for one OR the other 
+    print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
+    #print(biz['categories'][0]['title'])
 
+    # if we input 2+ categories, Yelp will search for one OR the other 
 
 
 #OUPUT - list for lunch
