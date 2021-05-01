@@ -13,6 +13,9 @@
 import os
 import requests
 import json
+import urllib.request
+from PIL import Image
+
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -44,9 +47,7 @@ link_headers = {'Authorization': 'bearer %s' % API_KEY}
 destination = input("Where is the destination of your vacation?")
 days = input("How many days is your vacation?")
 
-# Capturing Errors for Price Limit inputs:
-# Condense and make more efficient later 
- 
+# Capturing Errors for Price Limit inputs (Condense and make more efficient) 
 while True: 
     price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
     counter_price = len(price_limit)
@@ -110,6 +111,8 @@ for num in range(0,counter_price):
 vacation_days = int(days)
 #total_vacation_meals = (vacation_days) * 3
 
+# Inserting images 
+
 
 #OUPUT - list for breakfast
 breakfast = []
@@ -136,6 +139,9 @@ while True:
 
 for biz in business_list:
     print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
+    image_url = biz['image_url']
+    image = Image.open(urllib.request.urlopen(image_url))
+    print(image)
     #print(biz['categories'][0]['title'])
 
     # if we input 2+ categories, Yelp will search for one OR the other 
