@@ -106,20 +106,26 @@ for num in range(0,counter_price):
     prices.append(str(num + 1))
 
 
+# Limit for breakfast params 
+vacation_days = int(days)
+#total_vacation_meals = (vacation_days) * 3
+
+
 #OUPUT - list for breakfast
 breakfast = []
 breakfast_parameters = {'term': 'breakfast',
-              'limit': 50, 
+              'limit': vacation_days, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
               'price': prices, #can change this later
               'radius': 10000, #Change later?
-              'categories': food_list, # we don't want the DONE keyword in
+              'categories': food_list, 
               'location': destination}
 
 
 business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 
-# Capturing errors for business list (if no responses were found, business list would = 0)
+
+# Capturing errors for business list (if matches were found, business list = 0)
 while True: 
     if len(business_list)==0:
         print("No results for your criteria were found. Please try again!")
