@@ -75,6 +75,7 @@ while food_variable == True:
     if "DONE" in food_list:
         food_list.remove("DONE")
         food_variable = False 
+
 # FYI when we do a search with categories ['chinese', 'american'] Yelp returns either chinese OR american. 
 # Not restaurants that are a fusion or combination of both
 # This is just how the Yelp API works, not sure if we can change it 
@@ -118,8 +119,10 @@ vacation_days = int(days)
 # Inserting images 
 
 
-#OUPUT - list for breakfast
-breakfast = []
+#OUPUT - dictionary for breakfast
+breakfast_list = []
+breakfast_dict = { }
+
 breakfast_parameters = {'term': 'breakfast',
               'limit': vacation_days, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
@@ -141,24 +144,16 @@ while True:
         break
 
 
-a_dict = { }
-
 for biz in business_list:
     #print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
-    a_dict['Restaurant']=biz['name']
-    a_dict['Category']=biz['categories'][0]['title']
-    print(a_dict)
-    #breakfast.append(biz['name'])
-    #breakfast.append(biz['categories'][0]['title'])
+    breakfast_dict['Restaurant']=biz['name']
+    breakfast_dict['Category']=biz['categories'][0]['title']
+    print(breakfast_dict)
+    #breakfast_list.append(breakfast_dict)
     #image_url = biz['image_url']
     #image = Image.open(urllib.request.urlopen(image_url))
     #print(image) 
     # displaying images does not work yet - need to figure out
-
-# merging name and category list elements to be one 
-# this method is hard because we have to specifiy 1, 2, 3 for each and the list is always changing
-# will try dictionary instead 
-
 
 
 #OUPUT - list for lunch
@@ -169,14 +164,8 @@ for biz in business_list:
 
 # Breakfast, Lunch, & Dinner in one Dataframe 
 
-#meal_itinerary_df = pd.DataFrame(
-#    {
-#        "Breakfast": []
-#        "Lunch":
-#        "Dinner":
-#    }
-#
-#)
+#meal_itinerary_df = pd.DataFrame(breakfast_list)
+#print(meal_itinerary_df)
 
 
 
