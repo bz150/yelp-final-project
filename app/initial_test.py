@@ -13,8 +13,10 @@
 import os
 import requests
 import json
-import urllib.request
-from PIL import Image
+import pandas as pd
+import urllib.request # potentially for displaying images
+from PIL import Image # potentially for displaying images
+# need to add Pillow to requirements.txt if it does work 
 
 
 from dotenv import load_dotenv
@@ -73,7 +75,9 @@ while food_variable == True:
     if "DONE" in food_list:
         food_list.remove("DONE")
         food_variable = False 
-
+# FYI when we do a search with categories ['chinese', 'american'] Yelp returns either chinese OR american. 
+# Not restaurants that are a fusion or combination of both
+# This is just how the Yelp API works, not sure if we can change it 
 
 # Define my parameters of the search
 # BUSINESS SEARCH PARAMETERS - EXAMPLE
@@ -137,20 +141,42 @@ while True:
         break
 
 
-for biz in business_list:
-    print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
-    image_url = biz['image_url']
-    image = Image.open(urllib.request.urlopen(image_url))
-    print(image)
-    #print(biz['categories'][0]['title'])
+a_dict = { }
 
-    # if we input 2+ categories, Yelp will search for one OR the other 
+for biz in business_list:
+    #print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
+    a_dict['Restaurant']=biz['name']
+    a_dict['Category']=biz['categories'][0]['title']
+    print(a_dict)
+    #breakfast.append(biz['name'])
+    #breakfast.append(biz['categories'][0]['title'])
+    #image_url = biz['image_url']
+    #image = Image.open(urllib.request.urlopen(image_url))
+    #print(image) 
+    # displaying images does not work yet - need to figure out
+
+# merging name and category list elements to be one 
+# this method is hard because we have to specifiy 1, 2, 3 for each and the list is always changing
+# will try dictionary instead 
+
 
 
 #OUPUT - list for lunch
 
 #OUPUT - list for dinner
 
+
+
+# Breakfast, Lunch, & Dinner in one Dataframe 
+
+#meal_itinerary_df = pd.DataFrame(
+#    {
+#        "Breakfast": []
+#        "Lunch":
+#        "Dinner":
+#    }
+#
+#)
 
 
 
