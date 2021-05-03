@@ -80,49 +80,20 @@ for x in food_list:
     elif x == food_list[0]:
         food_list_structured = str(x)
 
-# FYI when we do a search with categories ['chinese', 'american'] Yelp returns either chinese OR american. 
-# Not restaurants that are a fusion or combination of both
-# This is just how the Yelp API works, not sure if we can change it 
-
-# Define my parameters of the search
-# BUSINESS SEARCH PARAMETERS - EXAMPLE
-#link_parameters = {'term': 'food',
-#              'limit': 50,
-#              'offset': 50, #basically lets you do pages
-#              'radius': 10000,
-#              'location': 'San Diego'}
-
-# BUSINESS MATCH PARAMETERS - EXAMPLE
-#PARAMETERS = {'name': 'Peets Coffee & Tea',
-#              'address1': '7845 Highland Village Pl',
-#              'city': 'San Diego',
-#              'state': 'CA',
-#              'country': 'US'}
-
-
-#businesses = parsed_response["businesses"]
-#business_data = response.json()
-#print(parsed_response.keys())
-#print(parsed_response)
-
-#for biz in businesses:
-#    print(biz['name'])
-
-
 #Create list for price
 prices = []
 
 for num in range(0,counter_price):
     prices.append(str(num + 1))
 
-
 # Limit for breakfast params 
 vacation_days = int(days)
 #total_vacation_meals = (vacation_days) * 3
 
-# Inserting images 
 
-
+#
+# BREAKFAST
+#
 
 #OUPUT - dictionary for breakfast
 breakfast_list = []
@@ -137,22 +108,17 @@ breakfast_parameters = {'term': 'breakfast',
               'location': destination
               }
 
+breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 
-business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
-#print(business_list[0].keys())
-
-
-# Capturing errors for business list (if matches were found, business list = 0)
-
+# Capturing errors for breakfast list (if matches were found, breakfast list = 0)
 while True: 
-    if len(business_list)==0:
+    if len(breakfast_list)==0:
         print("No results for your criteria were found. Please try again!")
         break
     else: 
         break
 
-
-for biz in business_list:
+for biz in breakfast_list:
     #print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
     breakfast_dict['Restaurant']=biz['name']
     breakfast_dict['Category']=biz['categories'][0]['title']
@@ -164,13 +130,29 @@ for biz in business_list:
     # displaying images does not work yet - need to figure out
 
 
-#OUPUT - list for lunch
-#for biz in business_list:
-#    print(biz['name'])
-#    print(biz['categories'])
-    # if we input 2+ categories, Yelp will search for one OR the other 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# PIN'S WORK ON OUTPUT BELOW
+#
 
 # if list index is out of range, we want to return an error: not found
 
@@ -187,6 +169,12 @@ for biz in business_list:
 #print(meal_itinerary_df)
 
 
+
+
+
+#
+# REFERENCE DATA STRUCTURE
+#
 
 #for biz in business_data['businesses']:
 #    print(biz['name'])
@@ -211,3 +199,27 @@ for biz in business_list:
 #    'open_at':unix_time,
 #    'attributes':'hot_and_new'
 #    }
+
+# Define my parameters of the search
+# BUSINESS SEARCH PARAMETERS - EXAMPLE
+#link_parameters = {'term': 'food',
+#              'limit': 50,
+#              'offset': 50, #basically lets you do pages
+#              'radius': 10000,
+#              'location': 'San Diego'}
+
+# BUSINESS MATCH PARAMETERS - EXAMPLE
+#PARAMETERS = {'name': 'Peets Coffee & Tea',
+#              'address1': '7845 Highland Village Pl',
+#              'city': 'San Diego',
+#              'state': 'CA',
+#              'country': 'US'}
+
+#businesses = parsed_response["businesses"]
+#business_data = response.json()
+#print(parsed_response.keys())
+#print(parsed_response)
+
+#for biz in businesses:
+#    print(biz['name'])
+
