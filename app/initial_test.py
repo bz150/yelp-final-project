@@ -119,6 +119,7 @@ vacation_days = int(days)
 # Inserting images 
 
 
+
 #OUPUT - dictionary for breakfast
 breakfast_list = []
 breakfast_dict = { }
@@ -133,9 +134,11 @@ breakfast_parameters = {'term': 'breakfast',
 
 
 business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
+#print(business_list[0].keys())
 
 
 # Capturing errors for business list (if matches were found, business list = 0)
+
 while True: 
     if len(business_list)==0:
         print("No results for your criteria were found. Please try again!")
@@ -157,6 +160,17 @@ for biz in business_list:
 
 
 #OUPUT - list for lunch
+#for biz in business_list:
+#    print(biz['name'])
+#    print(biz['categories'])
+    # if we input 2+ categories, Yelp will search for one OR the other 
+
+
+
+# if list index is out of range, we want to return an error: not found
+
+
+
 
 #OUPUT - list for dinner
 
