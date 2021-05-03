@@ -13,6 +13,11 @@
 import os
 import requests
 import json
+import pandas as pd
+import urllib.request # potentially for displaying images
+from PIL import Image # potentially for displaying images
+# need to add Pillow to requirements.txt if it does work 
+
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -29,8 +34,6 @@ def get_response(response_endpoint, response_parameters, response_headers):
     businesses_list = parsed_response["businesses"]
     return businesses_list
 
-
-
 # Define a business ID
 business_id = '4AErMBEoNzbk7Q8g45kKaQ'
 unix_time = 1546047836
@@ -45,7 +48,23 @@ link_headers = {'Authorization': 'bearer %s' % API_KEY}
 #INPUTS - read in user inputs
 destination = input("Where is the destination of your vacation?")
 days = input("How many days is your vacation?")
-price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
+
+# Capturing Errors for Price Limit inputs (Condense and make more efficient) 
+while True: 
+    price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
+    counter_price = len(price_limit)
+    if price_limit.isnumeric() == True: 
+        print("Oops, that's an invalid input. Please try again!")
+        exit()
+    elif price_limit.isalpha() == True: 
+        print("Oops, that's an invalid input. Please try again!")
+        exit()
+    elif counter_price > 4:
+        print("Oops, that's an invalid input. Please try again!")
+        exit()
+    else: 
+        break
+
 #for testing, change later
 #Create list for food preferences
 food_variable = True
@@ -57,6 +76,9 @@ while food_variable == True:
         food_list.remove("DONE")
         food_variable = False 
 
+# FYI when we do a search with categories ['chinese', 'american'] Yelp returns either chinese OR american. 
+# Not restaurants that are a fusion or combination of both
+# This is just how the Yelp API works, not sure if we can change it 
 
 # Define my parameters of the search
 # BUSINESS SEARCH PARAMETERS - EXAMPLE
@@ -85,54 +107,79 @@ link_parameters = {'term': 'food',
 
 #Create list for price
 prices = []
-counter_price = len(price_limit)
+
 for num in range(0,counter_price):
     prices.append(str(num + 1))
 
-# prices should be integers 
+
+# Limit for breakfast params 
+vacation_days = int(days)
+#total_vacation_meals = (vacation_days) * 3
+
+# Inserting images 
 
 
 
-#OUPUT - list for breakfast
-breakfast = []
+#OUPUT - dictionary for breakfast
+breakfast_list = []
+breakfast_dict = { }
+
 breakfast_parameters = {'term': 'breakfast',
-              'limit': 50, 
+              'limit': vacation_days, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
               'price': prices, #can change this later
               'radius': 10000, #Change later?
-              'categories': food_list, # we don't want the DONE keyword in
+              'categories': food_list, 
               'location': destination}
-
-
-# compile this price properly 
 
 
 business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 #print(business_list[0].keys())
 
+
+# Capturing errors for business list (if matches were found, business list = 0)
+
 while True: 
     if len(business_list)==0:
         print("No results for your criteria were found. Please try again!")
         break
-    else:
-        print(business_list[0].keys())
+    else: 
         break
+
+
+for biz in business_list:
+    #print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
+    breakfast_dict['Restaurant']=biz['name']
+    breakfast_dict['Category']=biz['categories'][0]['title']
+    print(breakfast_dict)
+    #breakfast_list.append(breakfast_dict)
+    #image_url = biz['image_url']
+    #image = Image.open(urllib.request.urlopen(image_url))
+    #print(image) 
+    # displaying images does not work yet - need to figure out
+
+
+#OUPUT - list for lunch
+#for biz in business_list:
+#    print(biz['name'])
+#    print(biz['categories'])
+    # if we input 2+ categories, Yelp will search for one OR the other 
+
 
 
 # if list index is out of range, we want to return an error: not found
 
 
-for biz in business_list:
-    print(biz['name'])
-    print(biz['categories'])
-    # if we input 2+ categories, Yelp will search for one OR the other 
 
-
-
-#OUPUT - list for lunch
 
 #OUPUT - list for dinner
 
+
+
+# Breakfast, Lunch, & Dinner in one Dataframe 
+
+#meal_itinerary_df = pd.DataFrame(breakfast_list)
+#print(meal_itinerary_df)
 
 
 
