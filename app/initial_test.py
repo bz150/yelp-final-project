@@ -53,9 +53,9 @@ food_list = []
 while food_variable == True:
     food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian?")
     food_list.append(food_preference)
-    if food_preference == "DONE":
-        food_variable = False
-
+    if "DONE" in food_list:
+        food_list.remove("DONE")
+        food_variable = False 
 
 
 # Define my parameters of the search
@@ -89,7 +89,7 @@ counter_price = len(price_limit)
 for num in range(0,counter_price):
     prices.append(str(num + 1))
 
-
+# prices should be integers 
 
 
 
@@ -100,22 +100,32 @@ breakfast_parameters = {'term': 'breakfast',
               'offset': 50, #basically lets you do pages
               'price': prices, #can change this later
               'radius': 10000, #Change later?
-              'categories': food_list,
+              'categories': food_list, # we don't want the DONE keyword in
               'location': destination}
 
 
+# compile this price properly 
+
+
 business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
-print(business_list[0].keys())
+#print(business_list[0].keys())
+
+while True: 
+    if len(business_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else:
+        print(business_list[0].keys())
+        break
+
+
+# if list index is out of range, we want to return an error: not found
+
 
 for biz in business_list:
     print(biz['name'])
     print(biz['categories'])
-
-
-
-
-
-
+    # if we input 2+ categories, Yelp will search for one OR the other 
 
 
 
