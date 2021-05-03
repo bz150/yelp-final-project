@@ -15,7 +15,7 @@ import requests
 import json
 import pandas as pd
 import urllib.request # potentially for displaying images
-from PIL import Image # potentially for displaying images
+#from PIL import Image # potentially for displaying images
 # need to add Pillow to requirements.txt if it does work 
 
 
@@ -53,20 +53,16 @@ days = input("How many days is your vacation?")
 while True: 
     price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
     counter_price = len(price_limit)
-    if price_limit.isnumeric() == True: 
+    if price_limit != "$" and price_limit != "$$" and price_limit != "$$$" and price_limit != "$$$$":
         print("Oops, that's an invalid input. Please try again!")
         exit()
-    elif price_limit.isalpha() == True: 
-        print("Oops, that's an invalid input. Please try again!")
-        exit()
-    elif counter_price > 4:
-        print("Oops, that's an invalid input. Please try again!")
-        exit()
-    else: 
+    else:
         break
+
 
 #for testing, change later
 #Create list for food preferences
+#VALIDATE CATEGORY ENTRIES FROM USER (try / except function?)
 food_variable = True
 food_list = []
 while food_variable == True:
@@ -74,7 +70,15 @@ while food_variable == True:
     food_list.append(food_preference)
     if "DONE" in food_list:
         food_list.remove("DONE")
-        food_variable = False 
+        food_variable = False
+
+# Sturcture new food inputs as one comma delimited string
+food_list_structured = ""
+for x in food_list:
+    if x != food_list[0]:
+        food_list_structured = str(food_list_structured + "," + x)
+    elif x == food_list[0]:
+        food_list_structured = str(x)
 
 # FYI when we do a search with categories ['chinese', 'american'] Yelp returns either chinese OR american. 
 # Not restaurants that are a fusion or combination of both
@@ -82,11 +86,11 @@ while food_variable == True:
 
 # Define my parameters of the search
 # BUSINESS SEARCH PARAMETERS - EXAMPLE
-link_parameters = {'term': 'food',
-              'limit': 50,
-              'offset': 50, #basically lets you do pages
-              'radius': 10000,
-              'location': 'San Diego'}
+#link_parameters = {'term': 'food',
+#              'limit': 50,
+#              'offset': 50, #basically lets you do pages
+#              'radius': 10000,
+#              'location': 'San Diego'}
 
 # BUSINESS MATCH PARAMETERS - EXAMPLE
 #PARAMETERS = {'name': 'Peets Coffee & Tea',
@@ -129,8 +133,9 @@ breakfast_parameters = {'term': 'breakfast',
               'offset': 50, #basically lets you do pages
               'price': prices, #can change this later
               'radius': 10000, #Change later?
-              'categories': food_list, 
-              'location': destination}
+              'categories': food_list_structured,
+              'location': destination
+              }
 
 
 business_list = get_response(link_endpoint, breakfast_parameters, link_headers)
