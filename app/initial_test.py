@@ -130,23 +130,62 @@ for biz in breakfast_list:
     # displaying images does not work yet - need to figure out
 
 
+#OUPUT - LUNCH
+lunch_list = []
+lunch_dict = { }
+
+lunch_parameters = {'term': 'lunch',
+              'limit': vacation_days, 
+              'offset': 50, #basically lets you do pages
+              'price': prices, #can change this later
+              'radius': 10000, #Change later?
+              'categories': food_list_structured,
+              'location': destination
+              }
+
+lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
+
+# Capturing errors for lunch list
+while True: 
+    if len(lunch_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else: 
+        break
+
+for biz in lunch_list:
+    lunch_dict['Restaurant']=biz['name']
+    lunch_dict['Category']=biz['categories'][0]['title']
+    print(lunch_dict)
 
 
+#OUPUT - DINNER
+dinner_list = []
+dinner_dict = { }
 
+dinner_parameters = {'term': 'dinner',
+              'limit': vacation_days, 
+              'offset': 50, #basically lets you do pages
+              'price': prices, #can change this later
+              'radius': 10000, #Change later?
+              'categories': food_list_structured,
+              'location': destination
+              }
 
+dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
 
+# Capturing errors for dinner list
+while True: 
+    if len(dinner_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else: 
+        break
 
-
-
-
-
-
-
-
-
-
-
-
+for biz in dinner_list:
+    dinner_dict['Restaurant']=biz['name']
+    dinner_dict['Category']=biz['categories'][0]['title']
+    print(dinner_dict)
 
 
 
@@ -154,16 +193,8 @@ for biz in breakfast_list:
 # PIN'S WORK ON OUTPUT BELOW
 #
 
-# if list index is out of range, we want to return an error: not found
 
-
-
-
-#OUPUT - list for dinner
-
-
-
-# Breakfast, Lunch, & Dinner in one Dataframe 
+# Compiled Breakfast, Lunch, & Dinner in one Dataframe 
 
 #meal_itinerary_df = pd.DataFrame(breakfast_list)
 #print(meal_itinerary_df)
