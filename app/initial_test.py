@@ -14,9 +14,6 @@ import os
 import requests
 import json
 import pandas as pd
-import urllib.request # potentially for displaying images
-#from PIL import Image # potentially for displaying images
-# need to add Pillow to requirements.txt if it does work 
 
 
 from dotenv import load_dotenv
@@ -118,21 +115,20 @@ while True:
     else: 
         break
 
-for biz in breakfast_list:
-    #print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
-    breakfast_dict['Restaurant']=biz['name']
-    breakfast_dict['Category']=biz['categories'][0]['title']
-    print(breakfast_dict)
-    #breakfast_list.append(breakfast_dict)
-    #image_url = biz['image_url']
-    #image = Image.open(urllib.request.urlopen(image_url))
-    #print(image) 
-    # displaying images does not work yet - need to figure out
+sorted_breakfast_list = [ ]
 
+for biz in breakfast_list: 
+    sorted_breakfast_list.append("Restaurant: " + biz['name'])
+    sorted_breakfast_list.append("Category: " + biz['categories'][0]['title'])
+    sorted_breakfast_list.append("Location: " + biz['location']['address1'])
+    sorted_breakfast_list.append("Rating: " + str(biz['rating']))
+    sorted_breakfast_list.append("Price: " + biz['price']) 
+
+# Need to merge every first five list items to be one 
+# if we want restarant, cat, loc, rating, price to appear in the same row in dataframe
 
 #OUPUT - LUNCH
 lunch_list = []
-lunch_dict = { }
 
 lunch_parameters = {'term': 'lunch',
               'limit': vacation_days, 
@@ -153,15 +149,17 @@ while True:
     else: 
         break
 
-for biz in lunch_list:
-    lunch_dict['Restaurant']=biz['name']
-    lunch_dict['Category']=biz['categories'][0]['title']
-    print(lunch_dict)
+sorted_lunch_list = [ ]
 
+for biz in lunch_list: 
+    sorted_lunch_list.append("Restaurant: " + biz['name'])
+    sorted_lunch_list.append("Category: " + biz['categories'][0]['title'])
+    sorted_lunch_list.append("Location: " + biz['location']['address1'])
+    sorted_lunch_list.append("Rating: " + str(biz['rating']))
+    sorted_lunch_list.append("Price: " + biz['price']) 
 
 #OUPUT - DINNER
 dinner_list = []
-dinner_dict = { }
 
 dinner_parameters = {'term': 'dinner',
               'limit': vacation_days, 
@@ -182,26 +180,42 @@ while True:
     else: 
         break
 
-for biz in dinner_list:
-    dinner_dict['Restaurant']=biz['name']
-    dinner_dict['Category']=biz['categories'][0]['title']
-    print(dinner_dict)
+sorted_dinner_list = [ ]
 
-
+for biz in dinner_list: 
+    sorted_dinner_list.append("Restaurant: " + biz['name'])
+    sorted_dinner_list.append("Category: " + biz['categories'][0]['title'])
+    sorted_dinner_list.append("Location: " + biz['location']['address1'])
+    sorted_dinner_list.append("Rating: " + str(biz['rating']))
+    sorted_dinner_list.append("Price: " + biz['price']) 
 
 #
 # PIN'S WORK ON OUTPUT BELOW
 #
-
-
+#print(sorted_breakfast_list)
+#print(" ")
+#print(sorted_lunch_list)
+#print(" ")
+#print(sorted_dinner_list)
+#
 # Compiled Breakfast, Lunch, & Dinner in one Dataframe 
 
-#meal_itinerary_df = pd.DataFrame(breakfast_list)
-#print(meal_itinerary_df)
+meals_data = {
+    'Breakfast': [sorted_breakfast_list], 
+    'Lunch': [sorted_lunch_list], 
+    'Dinner': [sorted_dinner_list]
+}
+
+meal_itin_df = pd.DataFrame(meals_data)
 
 
 
+meal_itin_df.columns = [" ".join(col) for col in meal_itin_df.columns.ravel()]
+meal_itin_df.reset_index(inplace=True)
+print(meal_itin_df.columns)
 
+print(type(meal_itin_df))
+print(meal_itin_df.head())
 
 #
 # REFERENCE DATA STRUCTURE
