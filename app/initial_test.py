@@ -15,8 +15,6 @@ import requests
 import json
 import pandas as pd
 
-
-
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -32,14 +30,9 @@ def get_response(response_endpoint, response_parameters, response_headers):
     businesses_list = parsed_response["businesses"]
     return businesses_list
 
-# Define a business ID
-business_id = '4AErMBEoNzbk7Q8g45kKaQ'
-unix_time = 1546047836
-
 # Define my API Key, My Endpoint, and My Header
 API_KEY = os.environ.get("YELP_API_KEY")
 
-#ENDPOINT = 'https://api.yelp.com/v3/businesses/{}'.format(business_id)
 link_endpoint = 'https://api.yelp.com/v3/businesses/search'
 link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
@@ -90,10 +83,9 @@ vacation_days = int(days)
 
 
 #
-# BREAKFAST
+# OUPUT - BREAKFAST
 #
 
-#OUPUT - Breakfast
 breakfast_list = []
 
 breakfast_parameters = {'term': 'breakfast',
@@ -123,7 +115,10 @@ for biz in breakfast_list:
 # Need to merge every first five list items to be one 
 # if we want restarant, cat, loc, rating, price to appear in the same row in dataframe
 
-#OUPUT - LUNCH
+#
+# OUPUT - LUNCH
+#
+
 lunch_list = []
 
 lunch_parameters = {'term': 'lunch',
@@ -132,7 +127,8 @@ lunch_parameters = {'term': 'lunch',
               'price': prices, #can change this later
               'radius': 10000, #Change later?
               'categories': food_list_structured,
-              'location': destination
+              'location': destination,
+              'open_at':unix_time,
               }
 
 lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
@@ -150,8 +146,10 @@ sorted_lunch_list = [ ]
 for biz in lunch_list: 
     sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
+#
+# OUPUT - DINNER
+#
 
-#OUPUT - DINNER
 dinner_list = []
 
 dinner_parameters = {'term': 'dinner',
@@ -205,6 +203,13 @@ print(meal_itin_df.columns)
 #
 # REFERENCE DATA STRUCTURE
 #
+
+#ENDPOINT = 'https://api.yelp.com/v3/businesses/{}'.format(business_id)
+
+# Define a business ID
+#business_id = '4AErMBEoNzbk7Q8g45kKaQ'
+#unix_time = 1546047836
+
 
 #for biz in business_data['businesses']:
 #    print(biz['name'])
