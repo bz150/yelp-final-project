@@ -14,9 +14,7 @@ import os
 import requests
 import json
 import pandas as pd
-import urllib.request # potentially for displaying images
-#from PIL import Image # potentially for displaying images
-# need to add Pillow to requirements.txt if it does work 
+
 
 
 from dotenv import load_dotenv
@@ -95,9 +93,8 @@ vacation_days = int(days)
 # BREAKFAST
 #
 
-#OUPUT - dictionary for breakfast
+#OUPUT - Breakfast
 breakfast_list = []
-breakfast_dict = { }
 
 breakfast_parameters = {'term': 'breakfast',
               'limit': vacation_days, # 1 breakfast per vacation day  
@@ -118,58 +115,91 @@ while True:
     else: 
         break
 
-for biz in breakfast_list:
-    #print("Restauraunt:", biz['name'], "| Category:", biz['categories'][0]['title'])
-    breakfast_dict['Restaurant']=biz['name']
-    breakfast_dict['Category']=biz['categories'][0]['title']
-    print(breakfast_dict)
-    #breakfast_list.append(breakfast_dict)
-    #image_url = biz['image_url']
-    #image = Image.open(urllib.request.urlopen(image_url))
-    #print(image) 
-    # displaying images does not work yet - need to figure out
+sorted_breakfast_list = [ ]
+
+for biz in breakfast_list: 
+    sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
+
+# Need to merge every first five list items to be one 
+# if we want restarant, cat, loc, rating, price to appear in the same row in dataframe
+
+#OUPUT - LUNCH
+lunch_list = []
+
+lunch_parameters = {'term': 'lunch',
+              'limit': vacation_days, 
+              'offset': 50, #basically lets you do pages
+              'price': prices, #can change this later
+              'radius': 10000, #Change later?
+              'categories': food_list_structured,
+              'location': destination
+              }
+
+lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
+
+# Capturing errors for lunch list
+while True: 
+    if len(lunch_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else: 
+        break
+
+sorted_lunch_list = [ ]
+
+for biz in lunch_list: 
+    sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
 
+#OUPUT - DINNER
+dinner_list = []
 
+dinner_parameters = {'term': 'dinner',
+              'limit': vacation_days, 
+              'offset': 50, #basically lets you do pages
+              'price': prices, #can change this later
+              'radius': 10000, #Change later?
+              'categories': food_list_structured,
+              'location': destination
+              }
 
+dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
 
+# Capturing errors for dinner list
+while True: 
+    if len(dinner_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else: 
+        break
 
+sorted_dinner_list = [ ]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+for biz in dinner_list: 
+    sorted_dinner_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
 #
-# PIN'S WORK ON OUTPUT BELOW
+# FINAL OUTPUT BELOW
 #
 
-# if list index is out of range, we want to return an error: not found
+#print(sorted_breakfast_list)
+#print(" ")
+#print(sorted_lunch_list)
+#print(" ")
+#print(sorted_dinner_list)
+
+meals_data = {
+    'Breakfast': sorted_breakfast_list, 
+    'Lunch': sorted_lunch_list, 
+    'Dinner': sorted_dinner_list
+}
 
 
+meal_itin_df = pd.DataFrame(meals_data)
+print(meal_itin_df)
 
-
-#OUPUT - list for dinner
-
-
-
-# Breakfast, Lunch, & Dinner in one Dataframe 
-
-#meal_itinerary_df = pd.DataFrame(breakfast_list)
-#print(meal_itinerary_df)
-
-
-
+meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
+print(meal_itin_df.columns)
 
 
 #
