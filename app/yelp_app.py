@@ -47,7 +47,8 @@ link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
 #INPUTS - read in user inputs
 destination = input("Where is the destination of your vacation?")
-days = input("How many days is your vacation?")
+days_input = input("How many days is your vacation?")
+days = int(days_input)
 
 # Capturing Errors for Price Limit inputs (Condense and make more efficient) 
 while True: 

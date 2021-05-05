@@ -1,0 +1,37 @@
+
+{% extends "bootstrap_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+    <h2>Weather Form</h2>
+
+    <img src=https://www.thelittlehawk.com/wp-content/uploads/2018/05/new-piktochart_30214532-copy.jpg alt="weatherphoto">
+
+    <p>Request an hourly forecast for your zip code...</p>
+
+    <form action="/yelp/results" method="POST">
+
+        <label>Destination:</label>
+        <input type="text" name="destination" placeholder="New York" value="New York">
+        <br>
+
+        <label>Days:</label>
+        <input type="text" name="days_input" placeholder="3" value="3">
+        <br>
+        <button>Submit</button>
+
+        <label>Days:</label>
+        <input type="radio" id="price_limit" name="price_limit" value="$$$">
+        <br>
+        <button>Submit</button>
+
+        <label>Days:</label>
+        <input type="checkbox" id="food_preference" name="food_preference" value="Chinese, American">
+        <br>
+        <button>Submit</button>
+
+        
+    </form>
+
+{% endblock %}
