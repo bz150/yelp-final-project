@@ -16,6 +16,7 @@ import json
 import pandas as pd
 
 
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -92,9 +93,8 @@ vacation_days = int(days)
 # BREAKFAST
 #
 
-#OUPUT - dictionary for breakfast
+#OUPUT - Breakfast
 breakfast_list = []
-breakfast_dict = { }
 
 breakfast_parameters = {'term': 'breakfast',
               'limit': vacation_days, # 1 breakfast per vacation day  
@@ -118,11 +118,7 @@ while True:
 sorted_breakfast_list = [ ]
 
 for biz in breakfast_list: 
-    sorted_breakfast_list.append("Restaurant: " + biz['name'])
-    sorted_breakfast_list.append("Category: " + biz['categories'][0]['title'])
-    sorted_breakfast_list.append("Location: " + biz['location']['address1'])
-    sorted_breakfast_list.append("Rating: " + str(biz['rating']))
-    sorted_breakfast_list.append("Price: " + biz['price']) 
+    sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
 # Need to merge every first five list items to be one 
 # if we want restarant, cat, loc, rating, price to appear in the same row in dataframe
@@ -152,11 +148,8 @@ while True:
 sorted_lunch_list = [ ]
 
 for biz in lunch_list: 
-    sorted_lunch_list.append("Restaurant: " + biz['name'])
-    sorted_lunch_list.append("Category: " + biz['categories'][0]['title'])
-    sorted_lunch_list.append("Location: " + biz['location']['address1'])
-    sorted_lunch_list.append("Rating: " + str(biz['rating']))
-    sorted_lunch_list.append("Price: " + biz['price']) 
+    sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
+
 
 #OUPUT - DINNER
 dinner_list = []
@@ -183,39 +176,31 @@ while True:
 sorted_dinner_list = [ ]
 
 for biz in dinner_list: 
-    sorted_dinner_list.append("Restaurant: " + biz['name'])
-    sorted_dinner_list.append("Category: " + biz['categories'][0]['title'])
-    sorted_dinner_list.append("Location: " + biz['location']['address1'])
-    sorted_dinner_list.append("Rating: " + str(biz['rating']))
-    sorted_dinner_list.append("Price: " + biz['price']) 
+    sorted_dinner_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
 #
-# PIN'S WORK ON OUTPUT BELOW
+# FINAL OUTPUT BELOW
 #
+
 #print(sorted_breakfast_list)
 #print(" ")
 #print(sorted_lunch_list)
 #print(" ")
 #print(sorted_dinner_list)
-#
-# Compiled Breakfast, Lunch, & Dinner in one Dataframe 
 
 meals_data = {
-    'Breakfast': [sorted_breakfast_list], 
-    'Lunch': [sorted_lunch_list], 
-    'Dinner': [sorted_dinner_list]
+    'Breakfast': sorted_breakfast_list, 
+    'Lunch': sorted_lunch_list, 
+    'Dinner': sorted_dinner_list
 }
 
+
 meal_itin_df = pd.DataFrame(meals_data)
+print(meal_itin_df)
 
-
-
-meal_itin_df.columns = [" ".join(col) for col in meal_itin_df.columns.ravel()]
-meal_itin_df.reset_index(inplace=True)
+meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
 print(meal_itin_df.columns)
 
-print(type(meal_itin_df))
-print(meal_itin_df.head())
 
 #
 # REFERENCE DATA STRUCTURE
