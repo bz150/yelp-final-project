@@ -57,7 +57,7 @@ while True:
 food_variable = True
 food_list = []
 while food_variable == True:
-    food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian?")
+    food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian?" )
     food_list.append(food_preference)
     if "DONE" in food_list:
         food_list.remove("DONE")
@@ -94,7 +94,9 @@ breakfast_parameters = {'term': 'breakfast',
               'price': prices, #can change this later
               'radius': 10000, #Change later?
               'categories': food_list_structured,
-              'location': destination
+              'location': destination,
+              'attributes':'good_for_breakfast',
+              #'open_at':1620226800
               }
 
 breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
@@ -128,7 +130,7 @@ lunch_parameters = {'term': 'lunch',
               'radius': 10000, #Change later?
               'categories': food_list_structured,
               'location': destination,
-              'open_at':unix_time,
+              'attributes':'good_for_lunch'
               }
 
 lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
@@ -158,7 +160,8 @@ dinner_parameters = {'term': 'dinner',
               'price': prices, #can change this later
               'radius': 10000, #Change later?
               'categories': food_list_structured,
-              'location': destination
+              'location': destination,
+              'attributes':'good_for_dinner'
               }
 
 dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
@@ -179,12 +182,12 @@ for biz in dinner_list:
 #
 # FINAL OUTPUT BELOW
 #
-
-#print(sorted_breakfast_list)
-#print(" ")
-#print(sorted_lunch_list)
-#print(" ")
-#print(sorted_dinner_list)
+print(" breakfast")
+print(sorted_breakfast_list)
+print(" lunch")
+print(sorted_lunch_list)
+print(" dinner")
+print(sorted_dinner_list)
 
 meals_data = {
     'Breakfast': sorted_breakfast_list, 
