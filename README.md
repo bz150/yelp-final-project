@@ -35,6 +35,6 @@ pip install -r requirements.txt
 
 Run the program: 
 ```sh
-python app/initial_test.py
+python app/yelp_app.py
 ```
 

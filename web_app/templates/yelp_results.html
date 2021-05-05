@@ -1,0 +1,19 @@
+{% extends "bootstrap_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+    <h2>Weather Forecast for {{ results["city_name"] }}</h2>
+
+    <p>Zip Code: {{ zip_code }}</p>
+
+    <!-- TODO: consider using a table instead of a list -->
+    <!-- TODO: consider adding images using the provided icon urls -->
+    <ul>
+    {% for forecast in results["hourly_forecasts"] %}
+        <li>{{ forecast["timestamp"] }} | {{ forecast["temp"] }} | {{ forecast["conditions"].upper() }}</li>
+        <img src={{ forecast["image_url"] }} alt="weatherphotos">
+        {% endfor %}
+    </ul>
+
+{% endblock %}
