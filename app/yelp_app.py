@@ -110,6 +110,9 @@ API_KEY = os.environ.get("YELP_API_KEY")
 link_endpoint = 'https://api.yelp.com/v3/businesses/search'
 link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
+
+#CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
+
 #INPUTS - read in user inputs
 destination = input("Where is the destination of your vacation?")
 days = input("How many days is your vacation?")
@@ -179,13 +182,13 @@ breakfast_list, lunch_list, dinner_list = get_response(link_endpoint, link_heade
 #
 #breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 
-# Capturing errors for breakfast list (if matches were found, breakfast list = 0)
-#while True: 
-#    if len(breakfast_list)==0:
-#        print("No results for your criteria were found. Please try again!")
-#        break
-#    else: 
-#        break
+#Capturing errors for breakfast list (if matches were found, breakfast list = 0)
+while True: 
+    if len(breakfast_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else: 
+        break
 #
 sorted_breakfast_list = [ ]
 #
@@ -213,13 +216,13 @@ for biz in breakfast_list:
 #
 #lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
 
-# Capturing errors for lunch list
-#while True: 
-#    if len(lunch_list)==0:
-#        print("No results for your criteria were found. Please try again!")
-#        break
-#    else: 
-#        break
+#Capturing errors for lunch list
+while True: 
+    if len(lunch_list)==0:
+        print("No results for your criteria were found. Please try again!")
+        break
+    else: 
+        break
 #
 sorted_lunch_list = [ ]
 
@@ -244,7 +247,7 @@ for biz in lunch_list:
 #
 #dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
 
-# Capturing errors for dinner list
+#Capturing errors for dinner list
 while True: 
     if len(dinner_list)==0:
         print("No results for your criteria were found. Please try again!")
@@ -256,6 +259,11 @@ sorted_dinner_list = [ ]
 
 for biz in dinner_list: 
     sorted_dinner_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
+
+
+
+#WEB APP OUTPUT
+print(f"RUNNING THE WEATHER SERVICE IN {APP_ENV.upper()} MODE...")
 
 #
 # FINAL OUTPUT BELOW
@@ -280,6 +288,7 @@ print(meal_itin_df)
 meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
 print(meal_itin_df.columns)
 
+#is there any way to change the row numbers to start with 1?
 
 #
 # REFERENCE DATA STRUCTURE
