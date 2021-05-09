@@ -6,23 +6,23 @@ from app.yelp_app import get_response
 
 yelp_route = Blueprint("yelp_route", __name__)
 
-@yelp_route.route("/yelp/results.json")
-def yelp_results_api():
-    print("YELP RESULTS...")
-    print("URL PARAMS:", dict(request.args))
-
-
-    destination = request.args.get("destination") or "New York"
-    days_input = request.args.get("days_input") or "3"
-    price_limit = request.args.get("price_limit") or "$$$"
-    #Change this to categories
-    food_preference = request.args.get("food_preference") or "Chinese, American"
-
-    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
-    if breakfast_results and lunch_results and dinner_results:
-        return jsonify(results)
-    else:
-        return jsonify({"message":"Invalid Inputs. Please try again."}), 404
+#@yelp_route.route("/yelp/results.json")
+#def yelp_results_api():
+#    print("YELP RESULTS...")
+#    print("URL PARAMS:", dict(request.args))
+#
+#
+#    destination = request.args.get("destination") or "New York"
+#    days_input = request.args.get("days_input") or "3"
+#    price_limit = request.args.get("price_limit") or "$$$"
+#    #Change this to categories
+#    food_preference = request.args.get("food_preference") or "Chinese, American"
+#
+#    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+#    if breakfast_results and lunch_results and dinner_results:
+#        return jsonify(results)
+#    else:
+#        return jsonify({"message":"Invalid Inputs. Please try again."}), 404
 
 @yelp_route.route("/yelp/form")
 def yelp_form():
@@ -49,7 +49,7 @@ def yelp_results():
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
         flash(f"Yelp Results Generated Successfully!", "success")
-        return get_response("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+        return get_response("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
     else:
         flash(f"Input Error. Please try again!", "danger")
         return redirect("/yelp/form")

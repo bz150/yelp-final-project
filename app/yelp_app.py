@@ -263,7 +263,7 @@ for biz in dinner_list:
 
 
 #WEB APP OUTPUT
-print(f"RUNNING THE WEATHER SERVICE IN {APP_ENV.upper()} MODE...")
+#print(f"RUNNING THE WEATHER SERVICE IN {APP_ENV.upper()} MODE...")
 
 #
 # FINAL OUTPUT BELOW
