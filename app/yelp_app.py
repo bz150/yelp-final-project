@@ -19,17 +19,91 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def get_response(response_endpoint, response_parameters, response_headers):
-    # Make a request to the Yelp API
-    response = requests.get(url = response_endpoint,
-                            params = response_parameters,
+
+def get_response(response_endpoint, response_headers, read_destination, read_days, read_price, read_food):
+    #BREAKFAST REQUEST
+    #Make breakfast parameters
+    breakfast_list = []
+
+    breakfast_parameters = {'term': 'breakfast',
+              'limit': read_days, # 1 breakfast per vacation day  
+              'offset': 50, #basically lets you do pages
+              'price': read_price, #can change this later
+              'radius': 10000, #Change later?
+              'categories': read_food,
+              'location': read_destination,
+              'attributes':'good_for_breakfast',
+              }
+
+
+    # Make a request to the Yelp API for breakfast
+    breakfast_response = requests.get(url = response_endpoint,
+                            params = breakfast_parameters,
                             headers = response_headers)
 
-    # Conver the JSON String to a dictionary
-    parsed_response = json.loads(response.text)
-    businesses_list = parsed_response["businesses"]
-    return businesses_list
+    # Convert the JSON String to a dictionary for breakfast
+    breakfast_parsed_response = json.loads(breakfast_response.text)
+    breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
+    #LUNCH REQUEST
+    lunch_list = []
+
+    lunch_parameters = {'term': 'lunch',
+                'limit': read_days, 
+                'offset': 50, #basically lets you do pages
+                'price': read_price, #can change this later
+                'radius': 10000, #Change later?
+                'categories': read_food,
+                'location': read_destination,
+                'attributes':'good_for_lunch'
+                }
+
+    # Make a request to the Yelp API for breakfast
+    lunch_response = requests.get(url = response_endpoint,
+                            params = lunch_parameters,
+                            headers = response_headers)
+
+    # Convert the JSON String to a dictionary for breakfast
+    lunch_parsed_response = json.loads(lunch_response.text)
+    lunch_businesses_list = lunch_parsed_response["businesses"]
+
+    #DINNER REQUEST
+
+    dinner_list = []
+
+    dinner_parameters = {'term': 'dinner',
+              'limit': read_days, 
+              'offset': 50, #basically lets you do pages
+              'price': read_price, #can change this later
+              'radius': 10000, #Change later?
+              'categories': read_food,
+              'location': read_destination,
+              'attributes':'good_for_dinner'
+              }
+    # Make a request to the Yelp API for breakfast
+    dinner_response = requests.get(url = response_endpoint,
+                            params = dinner_parameters,
+                            headers = response_headers)
+
+    # Convert the JSON String to a dictionary for breakfast
+    dinner_parsed_response = json.loads(dinner_response.text)
+    dinner_businesses_list = dinner_parsed_response["businesses"]
+
+
+
+    return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
+
+#def get_response(response_endpoint, response_parameters, response_headers):
+#    # Make a request to the Yelp API
+#    response = requests.get(url = response_endpoint,
+#                            params = response_parameters,
+#                            headers = response_headers)
+#
+#    # Conver the JSON String to a dictionary
+#    parsed_response = json.loads(response.text)
+#    businesses_list = parsed_response["businesses"]
+#    return businesses_list
+#
 # Define my API Key, My Endpoint, and My Header
 API_KEY = os.environ.get("YELP_API_KEY")
 
@@ -38,8 +112,7 @@ link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
 #INPUTS - read in user inputs
 destination = input("Where is the destination of your vacation?")
-days_input = input("How many days is your vacation?")
-days = int(days_input)
+days = input("How many days is your vacation?")
 
 # Capturing Errors for Price Limit inputs (Condense and make more efficient) 
 while True: 
@@ -83,35 +156,39 @@ vacation_days = int(days)
 #total_vacation_meals = (vacation_days) * 3
 
 
+#CALLING THE REQUESTS FROM THE FUNCTION
+breakfast_list, lunch_list, dinner_list = get_response(link_endpoint, link_headers, destination, vacation_days, prices, food_list_structured)
+
+
 #
 # OUPUT - BREAKFAST
 #
 
-breakfast_list = []
-
-breakfast_parameters = {'term': 'breakfast',
-              'limit': vacation_days, # 1 breakfast per vacation day  
-              'offset': 50, #basically lets you do pages
-              'price': prices, #can change this later
-              'radius': 10000, #Change later?
-              'categories': food_list_structured,
-              'location': destination,
-              'attributes':'good_for_breakfast',
-              #'open_at':1620226800
-              }
-
-breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
+#breakfast_list = []
+#
+#breakfast_parameters = {'term': 'breakfast',
+#              'limit': vacation_days, # 1 breakfast per vacation day  
+#              'offset': 50, #basically lets you do pages
+#              'price': prices, #can change this later
+#              'radius': 10000, #Change later?
+#              'categories': food_list_structured,
+#              'location': destination,
+#              'attributes':'good_for_breakfast',
+#              #'open_at':1620226800
+#              }
+#
+#breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 
 # Capturing errors for breakfast list (if matches were found, breakfast list = 0)
-while True: 
-    if len(breakfast_list)==0:
-        print("No results for your criteria were found. Please try again!")
-        break
-    else: 
-        break
-
+#while True: 
+#    if len(breakfast_list)==0:
+#        print("No results for your criteria were found. Please try again!")
+#        break
+#    else: 
+#        break
+#
 sorted_breakfast_list = [ ]
-
+#
 for biz in breakfast_list: 
     sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
@@ -122,28 +199,28 @@ for biz in breakfast_list:
 # OUPUT - LUNCH
 #
 
-lunch_list = []
-
-lunch_parameters = {'term': 'lunch',
-              'limit': vacation_days, 
-              'offset': 50, #basically lets you do pages
-              'price': prices, #can change this later
-              'radius': 10000, #Change later?
-              'categories': food_list_structured,
-              'location': destination,
-              'attributes':'good_for_lunch'
-              }
-
-lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
+#lunch_list = []
+#
+#lunch_parameters = {'term': 'lunch',
+#              'limit': vacation_days, 
+#              'offset': 50, #basically lets you do pages
+#              'price': prices, #can change this later
+#              'radius': 10000, #Change later?
+#              'categories': food_list_structured,
+#              'location': destination,
+#              'attributes':'good_for_lunch'
+#              }
+#
+#lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
 
 # Capturing errors for lunch list
-while True: 
-    if len(lunch_list)==0:
-        print("No results for your criteria were found. Please try again!")
-        break
-    else: 
-        break
-
+#while True: 
+#    if len(lunch_list)==0:
+#        print("No results for your criteria were found. Please try again!")
+#        break
+#    else: 
+#        break
+#
 sorted_lunch_list = [ ]
 
 for biz in lunch_list: 
@@ -153,19 +230,19 @@ for biz in lunch_list:
 # OUPUT - DINNER
 #
 
-dinner_list = []
-
-dinner_parameters = {'term': 'dinner',
-              'limit': vacation_days, 
-              'offset': 50, #basically lets you do pages
-              'price': prices, #can change this later
-              'radius': 10000, #Change later?
-              'categories': food_list_structured,
-              'location': destination,
-              'attributes':'good_for_dinner'
-              }
-
-dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
+#dinner_list = []
+#
+#dinner_parameters = {'term': 'dinner',
+#              'limit': vacation_days, 
+#              'offset': 50, #basically lets you do pages
+#              'price': prices, #can change this later
+#              'radius': 10000, #Change later?
+#              'categories': food_list_structured,
+#              'location': destination,
+#              'attributes':'good_for_dinner'
+#              }
+#
+#dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
 
 # Capturing errors for dinner list
 while True: 
