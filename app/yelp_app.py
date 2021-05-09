@@ -20,26 +20,32 @@ load_dotenv()
 
 
 
-def get_response(response_endpoint, response_headers, read_destination, read_days, read_price, read_food):
+def get_response(destination, days_input, price_limit, food_preference):
+    #ACQUIRE API KEY
+    API_KEY = os.environ.get("YELP_API_KEY")
+
+    link_endpoint = 'https://api.yelp.com/v3/businesses/search'
+    link_headers = {'Authorization': 'bearer %s' % API_KEY}
+    
     #BREAKFAST REQUEST
     #Make breakfast parameters
     breakfast_list = []
 
     breakfast_parameters = {'term': 'breakfast',
-              'limit': read_days, # 1 breakfast per vacation day  
+              'limit': days_input, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
-              'price': read_price, #can change this later
+              'price': price_limit, #can change this later
               'radius': 10000, #Change later?
-              'categories': read_food,
-              'location': read_destination,
+              'categories': food_preference,
+              'location': destination,
               'attributes':'good_for_breakfast',
               }
 
 
     # Make a request to the Yelp API for breakfast
-    breakfast_response = requests.get(url = response_endpoint,
+    breakfast_response = requests.get(url = link_endpoint,
                             params = breakfast_parameters,
-                            headers = response_headers)
+                            headers = link_headers)
 
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
@@ -49,19 +55,19 @@ def get_response(response_endpoint, response_headers, read_destination, read_day
     lunch_list = []
 
     lunch_parameters = {'term': 'lunch',
-                'limit': read_days, 
+                'limit': days_input, 
                 'offset': 50, #basically lets you do pages
-                'price': read_price, #can change this later
+                'price': price_limit, #can change this later
                 'radius': 10000, #Change later?
-                'categories': read_food,
-                'location': read_destination,
+                'categories': food_preference,
+                'location': destination,
                 'attributes':'good_for_lunch'
                 }
 
     # Make a request to the Yelp API for breakfast
-    lunch_response = requests.get(url = response_endpoint,
+    lunch_response = requests.get(url = link_endpoint,
                             params = lunch_parameters,
-                            headers = response_headers)
+                            headers = link_headers)
 
     # Convert the JSON String to a dictionary for breakfast
     lunch_parsed_response = json.loads(lunch_response.text)
@@ -72,18 +78,18 @@ def get_response(response_endpoint, response_headers, read_destination, read_day
     dinner_list = []
 
     dinner_parameters = {'term': 'dinner',
-              'limit': read_days, 
+              'limit': days_input, 
               'offset': 50, #basically lets you do pages
-              'price': read_price, #can change this later
+              'price': price_limit, #can change this later
               'radius': 10000, #Change later?
-              'categories': read_food,
-              'location': read_destination,
+              'categories': food_preference,
+              'location': destination,
               'attributes':'good_for_dinner'
               }
     # Make a request to the Yelp API for breakfast
-    dinner_response = requests.get(url = response_endpoint,
+    dinner_response = requests.get(url = link_endpoint,
                             params = dinner_parameters,
-                            headers = response_headers)
+                            headers = link_headers)
 
     # Convert the JSON String to a dictionary for breakfast
     dinner_parsed_response = json.loads(dinner_response.text)
@@ -104,11 +110,12 @@ def get_response(response_endpoint, response_headers, read_destination, read_day
 #    businesses_list = parsed_response["businesses"]
 #    return businesses_list
 #
-# Define my API Key, My Endpoint, and My Header
-API_KEY = os.environ.get("YELP_API_KEY")
 
-link_endpoint = 'https://api.yelp.com/v3/businesses/search'
-link_headers = {'Authorization': 'bearer %s' % API_KEY}
+# Define my API Key, My Endpoint, and My Header
+#API_KEY = os.environ.get("YELP_API_KEY")
+#
+#link_endpoint = 'https://api.yelp.com/v3/businesses/search'
+#link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
 
 #CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
@@ -160,7 +167,7 @@ vacation_days = int(days)
 
 
 #CALLING THE REQUESTS FROM THE FUNCTION
-breakfast_list, lunch_list, dinner_list = get_response(link_endpoint, link_headers, destination, vacation_days, prices, food_list_structured)
+breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
 
 #
