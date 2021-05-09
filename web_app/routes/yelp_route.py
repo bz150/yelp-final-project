@@ -4,21 +4,26 @@ from flask import Blueprint, request, jsonify, render_template, redirect, flash
 
 from app.yelp_app import get_response
 
-weather_routes = Blueprint("weather_routes", __name__)
+yelp_route = Blueprint("yelp_route", __name__)
 
-@yelp_route.route("/weather/forecast.json")
-def weather_forecast_api():
-    print("WEATHER FORECAST (API)...")
+@yelp_route.route("/yelp/results.json")
+def yelp_results_api():
+    print("YELP RESULTS...")
     print("URL PARAMS:", dict(request.args))
 
-    country_code = request.args.get("country_code") or "US"
-    zip_code = request.args.get("zip_code") or "20057"
 
-    results = get_hourly_forecasts(country_code=country_code, zip_code=zip_code)
-    if results:
-        return jsonify(results)
+    destination = request.args.get("destination") or "New York"
+    days_input = request.args.get("days_input") or "3"
+    days_input=int(days_input)
+    price_limit = request.args.get("price_limit") or "$$$"
+    #Change this to categories
+    food_preference = request.args.get("food_preference") or "American"
+
+    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+    if breakfast_results and lunch_results and dinner_results:
+        return jsonify(breakfast_results, lunch_results, dinner_results)
     else:
-        return jsonify({"message":"Invalid Geography. Please try again."}), 404
+        return jsonify({"message":"Invalid Inputs. Please try again."}), 404
 
 @yelp_route.route("/yelp/form")
 def yelp_form():
@@ -38,14 +43,15 @@ def yelp_results():
 
     destination = request_data.get("destination") or "New York"
     days_input = request_data.get("days_input") or "3"
-    price_limit = request_data.get("price_limit") or "$$$"
+    days_input = int(days_input)
+    price_limit = request_data.get("price_limit") or "$"
     #Change this to categories
-    food_preference = request_data.get("food_preference") or "Chinese, American"
+    food_preference = request_data.get("food_preference") or "American"
 
-    results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
-    if results:
-        flash(f"Weather Forecast Generated Successfully!", "success")
-        return get_response("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+    if breakfast_results and lunch_results and dinner_results:
+        flash(f"Yelp Results Generated Successfully!", "success")
+        return get_response("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
     else:
         flash(f"Input Error. Please try again!", "danger")
         return redirect("/yelp/form")

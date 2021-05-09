@@ -4,11 +4,11 @@
 
 {% block content %}
 
-    <h2>Weather Form</h2>
+    <h2>Vacation Form</h2>
 
     <img src=https://www.thelittlehawk.com/wp-content/uploads/2018/05/new-piktochart_30214532-copy.jpg alt="weatherphoto">
 
-    <p>Request an hourly forecast for your zip code...</p>
+    <p>Request a Yelp food itinerary for your vacation:</p>
 
     <form action="/yelp/results" method="POST">
 
@@ -17,17 +17,29 @@
         <br>
 
         <label>Days:</label>
-        <input type="text" name="days_input" placeholder="3" value="3">
+        <input type="number" name="days_input" placeholder="3" value="3">
         <br>
-        <button>Submit</button>
 
-        <label>Days:</label>
-        <input type="radio" id="price_limit" name="price_limit" value="$$$">
+        <label>Price Limit:</label>
         <br>
-        <button>Submit</button>
+        <input type="radio" id="$" name="price_limit" value="$">
+        <label for="$">$</label><br>
+        <input type="radio" id="$$" name="price_limit" value="$$">
+        <label for="$$">$$</label><br>
+        <input type="radio" id="$$$" name="price_limit" value="$$$">
+        <label for="$$$">$$$</label><br>
+        <input type="radio" id="$$$$" name="price_limit" value="$$$$">
+        <label for="$$$$">$$$$</label>
+        <br>
 
-        <label>Days:</label>
-        <input type="checkbox" id="food_preference" name="food_preference" value="Chinese, American">
+        <label>Food Preference:</label>
+        <br>
+        <input type="checkbox" id="chinese_food" name="food_preference" value="Chinese">
+        <label for="chinese_food"> Chinese</label><br>
+        <input type="checkbox" id="american_food" name="food_preference" value="American">
+        <label for="american_food"> American</label><br>
+        <input type="checkbox" id="italian_food" name="food_preference" value="Italian">
+        <label for="italian_food"> Italian</label>
         <br>
         <button>Submit</button>
 

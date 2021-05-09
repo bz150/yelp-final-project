@@ -36,5 +36,9 @@ pip install -r requirements.txt
 Run the program: 
 ```sh
 python app/yelp_app.py
+
+
+Run the web app:
+FLASK_APP=web_app flask run
 ```
 
