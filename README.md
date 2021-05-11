@@ -39,6 +39,11 @@ python app/yelp_app.py
 
 
 Run the web app:
+# Mac OS: 
 FLASK_APP=web_app flask run
+
+# Windows OS: 
+export FLASK_APP=web_app 
+flask run
 ```
 
