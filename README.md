@@ -47,3 +47,6 @@ export FLASK_APP=web_app
 flask run
 ```
 
+## Testing
+
+Running all tests: `pytest`
