@@ -5,6 +5,7 @@
 # the presence of this file, even if empty,
 # ... facilitates local imports from one file to another,
 # ... including importing app code for testing purposes
+<<<<<<< Updated upstream
 #
 #
 
@@ -112,3 +113,5 @@ def get_response(destination, days_input, price_limit, food_preference):
 #    """
 #    return f"${my_price:,.2f}"
 #
+=======
+>>>>>>> Stashed changes
