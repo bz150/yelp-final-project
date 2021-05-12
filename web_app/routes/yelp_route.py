@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, jsonify, render_template, redirect, flash
 
-from app.yelp_app import get_response
+from app.yelp import get_response
 
 yelp_route = Blueprint("yelp_route", __name__)
 
@@ -15,7 +15,10 @@ def yelp_results_api():
     destination = request.args.get("destination") or "New York"
     days_input = request.args.get("days_input") or "3"
     days_input=int(days_input)
-    price_limit = request.args.get("price_limit") or "$$$"
+    price = request.args.get("price_limit") or ["1", "2", "3"]
+    price_limit = []
+    for num in range(0,len(price)):
+        price_limit.append(str(num + 1))
     #Change this to categories
     food_preference = request.args.get("food_preference") or "American"
 
@@ -44,7 +47,10 @@ def yelp_results():
     destination = request_data.get("destination") or "New York"
     days_input = request_data.get("days_input") or "3"
     days_input = int(days_input)
-    price_limit = request_data.get("price_limit") or "$"
+    price = request_data.get("price_limit") or ["1", "2", "3"]
+    price_limit = []
+    for num in range(0,len(price)):
+        price_limit.append(str(num + 1))
     #Change this to categories
     food_preference = request_data.get("food_preference") or "American"
 
