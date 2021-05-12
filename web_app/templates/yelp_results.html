@@ -5,15 +5,17 @@
 
     <h2>Food Itinerary for {{ destination }}</h2>
 
+    
+    
     <!-- <p>Zip Code: {{ zip_code }}</p> -->
 
     <!-- TODO: consider using a table instead of a list -->
     <!-- TODO: consider adding images using the provided icon urls -->
     <ul>
-    <!-- {% for biz in breakfast_results %} 
-        <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li> -->
-        <!-- <img src={{ forecast["image_url"] }} alt="weatherphotos"> -->
-        <!-- {% endfor %} -->
+    {% for biz in breakfast_results %} 
+    <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
+    <img src={{ biz["image_url"] }} alt="weatherphotos">
+    {% endfor %}
     </ul>
 
 {% endblock %}

@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 Run the program: 
 ```sh
-python app/yelp_app.py
+python app/yelp_app.py (or python -m app.yelp_app)
 
 
 Run the web app:

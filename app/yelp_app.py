@@ -93,9 +93,33 @@ def get_response(destination, days_input, price_limit, food_preference):
     dinner_parsed_response = json.loads(dinner_response.text)
     dinner_businesses_list = dinner_parsed_response["businesses"]
 
-
-
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
+
+=======
+#{'alias': 'the-franklin-jersey-city',
+# 'categories': [{'alias': 'breakfast_brunch', 'title': 'Breakfast & Brunch'},
+#                {'alias': 'italian', 'title': 'Italian'}],
+# 'coordinates': {'latitude': 40.7417, 'longitude': -74.047},
+# 'display_phone': '(201) 653-4710',
+# 'distance': 6000.175428011717,
+# 'id': 'Ogi746koEngpryezNYUK0Q',
+# 'image_url': 'https://s3-media3.fl.yelpcdn.com/bphoto/HxKucnsu7uapA7C6fuXQJw/o.jpg',
+# 'is_closed': False,
+# 'location': {'address1': '159 New York Ave',
+#              'address2': None,
+#              'address3': '',
+#              'city': 'Jersey City',
+#              'country': 'US',
+#              'display_address': ['159 New York Ave', 'Jersey City, NJ 07307'],
+#              'state': 'NJ',
+#              'zip_code': '07307'},
+# 'name': 'The Franklin',
+# 'phone': '+12016534710',
+# 'price': '$$',
+# 'rating': 4.0,
+# 'review_count': 87,
+# 'transactions': ['delivery', 'pickup'],
+# 'url': 'https://www.yelp.com/biz/the-franklin-jersey-city?adjust_creative=MGJyBKOR74jVLFZvXggS3w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=MGJyBKOR74jVLFZvXggS3w'}
 
 
 if __name__ == "__main__":
@@ -170,8 +194,7 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
-    breakpoint()
-    
+
     #
     # OUPUT - BREAKFAST
     #

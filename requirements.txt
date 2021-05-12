@@ -7,11 +7,15 @@
 python-dotenv
 
 requests
-pandas 
+pandas
+
+Flask
+gunicorn
+
 #PIL
 
 #
-# DEV AND TESTING
+# TESTING
 #
 
 pytest

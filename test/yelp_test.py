@@ -11,7 +11,6 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv()
 
-
 # expect default environment variable setting of "CI=true" on Travis CI
 # see: https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
 CI_ENV = os.getenv("CI") == "true"
