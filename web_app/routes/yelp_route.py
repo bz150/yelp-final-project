@@ -20,8 +20,14 @@ def yelp_results_api():
     for num in range(0,len(price)):
         price_limit.append(str(num + 1))
     #Change this to categories
+    #food = []
     food_preference = request.args.get("food_preference") or "American"
-
+    #food_preference = ""
+    #for item in food:
+    #    if item != food[0]:
+    #        food_preference= str(food_preference + "," + item)
+    #    elif item == food[0]:
+    #        food_preference = str(item)
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
         return jsonify(breakfast_results, lunch_results, dinner_results)
@@ -52,7 +58,14 @@ def yelp_results():
     for num in range(0,len(price)):
         price_limit.append(str(num + 1))
     #Change this to categories
+    #food = []
     food_preference = request_data.get("food_preference") or "American"
+    #food_preference = ""
+    #for item in food:
+    #    if item != food[0]:
+    #        food_preference= str(food_preference + "," + item)
+    #    elif item == food[0]:
+    #        food_preference = str(item)
 
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
