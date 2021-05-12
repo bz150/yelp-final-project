@@ -18,10 +18,6 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv()
 
-
-def function(x):
-    return x+x
-
 def get_response(destination, days_input, price_limit, food_preference):
     #ACQUIRE API KEY
     API_KEY = os.environ.get("YELP_API_KEY")

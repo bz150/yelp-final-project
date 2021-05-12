@@ -1,7 +1,5 @@
 # import the code we want to test
 
-
-from app.yelp_app import function
 from app.yelp_app import get_response
 
 import pytest
@@ -12,9 +10,6 @@ import pandas as pd
 
 from dotenv import load_dotenv
 load_dotenv()
-
-def test_function():
-    assert function(10) == 20
 
 
 # expect default environment variable setting of "CI=true" on Travis CI
