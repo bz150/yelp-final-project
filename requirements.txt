@@ -8,7 +8,7 @@ python-dotenv
 
 requests
 pandas 
-PIL
+#PIL
 
 #
 # DEV AND TESTING
