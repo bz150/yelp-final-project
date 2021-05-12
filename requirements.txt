@@ -1,6 +1,17 @@
 # this is the "requirements.txt" file
 
-requests
+#
+# PRODUCTION
+#
+
 python-dotenv
+
+requests
 pandas 
-PIL
+#PIL
+
+#
+# DEV AND TESTING
+#
+
+pytest
