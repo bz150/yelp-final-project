@@ -7,6 +7,7 @@
 # ... including importing app code for testing purposes
 #
 #
+
 import os
 import requests
 import json
@@ -14,6 +15,7 @@ import pandas as pd
 
 from dotenv import load_dotenv
 load_dotenv()
+
 
 def function(x):
     return x+x
@@ -96,6 +98,7 @@ def get_response(destination, days_input, price_limit, food_preference):
 
 
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
+
 
 
 
