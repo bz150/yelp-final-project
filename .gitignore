@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+
+# ignore clutter files on Mac:
+.DS_Store
+
+# ignore results of running tests:
+__pycache__
+.pytest_cache

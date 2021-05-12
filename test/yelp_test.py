@@ -2,21 +2,22 @@
 
 # TODO: import some code
 
-from app.yelp_app import get_response
-
+from app.yelp import get_response
+from app.yelp import function
+import pytest
 
 
 #
 # FROM SHOPPING_TEST.PY
 #
 
-#from app.__init__ import to_usd
+from app.__init__ import function
 #from pandas import read_csv
 #import os
 
 
-#def test_to_usd():
-#    assert to_usd(9.5) == "$9.50"
+def test_function():
+    assert function(10) == 20
 
 
 # consider making this a fixture
