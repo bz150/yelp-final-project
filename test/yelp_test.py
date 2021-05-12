@@ -1,11 +1,6 @@
 # import the code we want to test
 
-# TODO: import some code
-
 from app.yelp_app import get_response
-from app.yelp_app import function
-from app.__init__ import function
-from app.__init__ import get_response
 
 import pytest
 import os
@@ -16,25 +11,27 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv()
 
-def test_function():
-    assert function(10) == 20
-
-
 # expect default environment variable setting of "CI=true" on Travis CI
 # see: https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
 CI_ENV = os.getenv("CI") == "true"
 
 @pytest.mark.skipif(CI_ENV==True, reason="to avoid issuing HTTP requests on the CI server") # skips this test on CI
-
 def test_get_response():
-    destination = "1804 N Quinn St Rosslyn VA 22209"
+    destination = "Washington DC"
     days_input = 1
     price_limit = "1,2"
     food_preference = "American"
     test_breakfast_list, test_lunch_list, test_dinner_list = get_response(destination, days_input, price_limit, food_preference) # issues an HTTP request (see function definition below)
+    
+    # function should return three lists, each having some items
+    assert isinstance(test_breakfast_list, list)
+    assert isinstance(test_lunch_list, list)
+    assert isinstance(test_dinner_list, list)
 
-    #assert isinstance(test_parsed_response, dict)
-    assert test_breakfast_list[0]["id"] == "NzFNtnlxyifE3MPTB0kupA"
+    # make sure results have the right keys
+    assert list(test_breakfast_list[0].keys()) == ['id', 'alias', 'name', 'image_url', 'is_closed', 'url', 'review_count', 'categories', 'rating', 'coordinates', 'transactions', 'price', 'location', 'phone', 'display_phone', 'distance']
+    
+    # look for nested keys, what data type each is (e.g. what you could get if accessing 'id')
 
 
 # consider making this a fixture

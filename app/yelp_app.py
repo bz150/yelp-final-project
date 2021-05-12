@@ -18,10 +18,6 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv()
 
-
-def function(x):
-    return x+x
-
 def get_response(destination, days_input, price_limit, food_preference):
     #ACQUIRE API KEY
     API_KEY = os.environ.get("YELP_API_KEY")
@@ -95,10 +91,9 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     # Convert the JSON String to a dictionary for breakfast
     dinner_parsed_response = json.loads(dinner_response.text)
-    dinner_businesses_list = dinner_parsed_response["businesses"]  
+    dinner_businesses_list = dinner_parsed_response["businesses"]
 
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
-
 
 #{'alias': 'the-franklin-jersey-city',
 # 'categories': [{'alias': 'breakfast_brunch', 'title': 'Breakfast & Brunch'},
@@ -124,6 +119,7 @@ def get_response(destination, days_input, price_limit, food_preference):
 # 'review_count': 87,
 # 'transactions': ['delivery', 'pickup'],
 # 'url': 'https://www.yelp.com/biz/the-franklin-jersey-city?adjust_creative=MGJyBKOR74jVLFZvXggS3w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=MGJyBKOR74jVLFZvXggS3w'}
+
 
 if __name__ == "__main__":
     
@@ -197,7 +193,7 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
-    
+
     #
     # OUPUT - BREAKFAST
     #
