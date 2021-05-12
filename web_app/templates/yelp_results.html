@@ -1,21 +1,58 @@
 {% extends "bootstrap_layout.html" %}
 {% set active_page = "home" %}
 
+
 {% block content %}
 
-    <h2>Food Itinerary for {{ destination }}</h2>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+</html>
 
-    
-    
+    <h2>Food Itinerary for {{ destination }}</h2>
+    <table style="width:100%">
+        <tr>
+            <th>Breakfast</th>
+            <th>Lunch</th> 
+            <th>Dinner</th>
+        </tr>
+        <tr>
+          <td>{% for biz in breakfast_results %} 
+            <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
+            <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
+            <img src={{ biz["image_url"] }} 
+                width="200"
+                height="200" />
+            {% endfor %}</td>
+          <td>{% for biz in lunch_results %} 
+            <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
+            <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
+            <img src={{ biz["image_url"] }} 
+                width="200"
+                height="200" />
+            {% endfor %}</td>
+          <td>{% for biz in dinner_results %} 
+            <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
+            <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
+            <img src={{ biz["image_url"] }} 
+                width="200"
+                height="200" />
+            {% endfor %}</td>
+        </tr>
+
+      </table>
+      
+      </body>
+      </html>
+
     <!-- <p>Zip Code: {{ zip_code }}</p> -->
 
     <!-- TODO: consider using a table instead of a list -->
     <!-- TODO: consider adding images using the provided icon urls -->
-    <ul>
-    {% for biz in breakfast_results %} 
-    <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-    <img src={{ biz["image_url"] }} alt="weatherphotos">
-    {% endfor %}
-    </ul>
 
 {% endblock %}
