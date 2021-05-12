@@ -174,7 +174,6 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
-    breakpoint()
     
     #
     # OUPUT - BREAKFAST
