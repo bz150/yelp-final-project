@@ -103,7 +103,7 @@ def get_response(destination, days_input, price_limit, food_preference):
 
 
 if __name__ == "__main__":
-
+    
     #def get_response(response_endpoint, response_parameters, response_headers):
     #    # Make a request to the Yelp API
     #    response = requests.get(url = response_endpoint,
@@ -174,7 +174,8 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
-
+    breakpoint()
+    
     #
     # OUPUT - BREAKFAST
     #
