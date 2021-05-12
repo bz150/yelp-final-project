@@ -57,7 +57,7 @@ def yelp_results():
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
         flash(f"Yelp Results Generated Successfully!", "success")
-        return get_response("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
+        return render_template("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
     else:
         flash(f"Input Error. Please try again!", "danger")
         return redirect("/yelp/form")
