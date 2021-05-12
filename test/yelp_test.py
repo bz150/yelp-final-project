@@ -17,7 +17,7 @@ CI_ENV = os.getenv("CI") == "true"
 
 @pytest.mark.skipif(CI_ENV==True, reason="to avoid issuing HTTP requests on the CI server") # skips this test on CI
 def test_get_response():
-    destination = "1804 N Quinn St Rosslyn VA 22209"
+    destination = "Washington DC"
     days_input = 1
     price_limit = "1,2"
     food_preference = "American"

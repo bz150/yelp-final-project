@@ -95,7 +95,6 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
 
-=======
 #{'alias': 'the-franklin-jersey-city',
 # 'categories': [{'alias': 'breakfast_brunch', 'title': 'Breakfast & Brunch'},
 #                {'alias': 'italian', 'title': 'Italian'}],
