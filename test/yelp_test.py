@@ -2,22 +2,39 @@
 
 # TODO: import some code
 
-from app.yelp import get_response
-from app.yelp import function
-import pytest
-
-
-#
-# FROM SHOPPING_TEST.PY
-#
-
+from app.yelp_app import get_response
+from app.yelp_app import function
 from app.__init__ import function
-#from pandas import read_csv
-#import os
+from app.__init__ import get_response
 
+import pytest
+import os
+import requests
+import json
+import pandas as pd
+
+from dotenv import load_dotenv
+load_dotenv()
 
 def test_function():
     assert function(10) == 20
+
+
+# expect default environment variable setting of "CI=true" on Travis CI
+# see: https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
+CI_ENV = os.getenv("CI") == "true"
+
+@pytest.mark.skipif(CI_ENV==True, reason="to avoid issuing HTTP requests on the CI server") # skips this test on CI
+
+def test_get_response():
+    destination = "1804 N Quinn St Rosslyn VA 22209"
+    days_input = 1
+    price_limit = "1,2"
+    food_preference = "American"
+    test_breakfast_list, test_lunch_list, test_dinner_list = get_response(destination, days_input, price_limit, food_preference) # issues an HTTP request (see function definition below)
+
+    #assert isinstance(test_parsed_response, dict)
+    assert test_breakfast_list[0]["id"] == "NzFNtnlxyifE3MPTB0kupA"
 
 
 # consider making this a fixture
