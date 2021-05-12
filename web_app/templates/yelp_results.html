@@ -14,7 +14,27 @@
     <ul>
     {% for biz in breakfast_results %} 
     <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-    <img src={{ biz["image_url"] }} alt="weatherphotos">
+    <img src={{ biz["image_url"] }} alt="weatherphotos"
+        width="200"
+        height="200" />
+    {% endfor %}
+    </ul>
+
+    <ul>
+    {% for biz in lunch_results %} 
+    <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
+    <img src={{ biz["image_url"] }} alt="weatherphotos"
+        width="200"
+        height="200" />
+    {% endfor %}
+    </ul>
+
+    <ul>
+    {% for biz in dinner_results %} 
+    <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
+    <img src={{ biz["image_url"] }} alt="weatherphotos"
+        width="200"
+        height="200" />
     {% endfor %}
     </ul>
 
