@@ -168,7 +168,6 @@ if __name__ == "__main__":
 
     # Limit for breakfast params 
     vacation_days = int(days)
-    #total_vacation_meals = (vacation_days) * 3
 
 
     #CALLING THE REQUESTS FROM THE FUNCTION
