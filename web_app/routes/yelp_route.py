@@ -61,7 +61,10 @@ def yelp_results():
         price_limit.append(str(num + 1))
     #Change this to categories
     #food = []
-    food_preference = request.form.getlist("food_preference[]") or "[American, Chinese]"
+    food_preference = request.form.getlist("food_preference") or "[American, Chinese]"
+    
+
+
     #print(food)
     #food_preference = ""
     #for item in food:
@@ -77,3 +80,6 @@ def yelp_results():
     else:
         flash(f"Input Error. Please try again!", "danger")
         return redirect("/yelp/form")
+
+
+    
