@@ -6,33 +6,34 @@ from app.yelp import get_response
 
 yelp_route = Blueprint("yelp_route", __name__)
 
-@yelp_route.route("/yelp/results.json")
-def yelp_results_api():
-    print("YELP RESULTS...")
-    print("URL PARAMS:", dict(request.args))
-
-
-    destination = request.args.get("destination") or "New York"
-    days_input = request.args.get("days_input") or "3"
-    days_input=int(days_input)
-    price = request.args.get("price_limit") or ["1", "2", "3"]
-    price_limit = []
-    for num in range(0,len(price)):
-        price_limit.append(str(num + 1))
-    #Change this to categories
-    #food = []
-    food_preference = request.args.get("food_preference") or "American"
-    #food_preference = ""
-    #for item in food:
-    #    if item != food[0]:
-    #        food_preference= str(food_preference + "," + item)
-    #    elif item == food[0]:
-    #        food_preference = str(item)
-    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
-    if breakfast_results and lunch_results and dinner_results:
-        return jsonify(breakfast_results, lunch_results, dinner_results)
-    else:
-        return jsonify({"message":"Invalid Inputs. Please try again."}), 404
+#@yelp_route.route("/yelp/results.json")
+#def yelp_results_api():
+#    print("YELP RESULTS...")
+#    print("URL PARAMS:", dict(request.args))
+#
+#
+#    destination = request.args.get("destination") or "New York"
+#    days_input = request.args.get("days_input") or "3"
+#    days_input=int(days_input)
+#    price = request.args.get("price_limit") or ["1", "2", "3"]
+#    price_limit = []
+#    for num in range(0,len(price)):
+#        price_limit.append(str(num + 1))
+#    #Change this to categories
+#    food = []
+#    food = request.args.get("food_preference") or "American"
+#    print(food)
+#    food_preference = ""
+#    for item in food:
+#        #if item != food[0]:
+#        food_preference= str(food_preference + "," + item)
+#        #elif item == food[0]:
+#        #    food_preference = str(item)
+#    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+#    if breakfast_results and lunch_results and dinner_results:
+#        return jsonify(breakfast_results, lunch_results, dinner_results)
+#    else:
+#        return jsonify({"message":"Invalid Inputs. Please try again."}), 404
 
 @yelp_route.route("/yelp/form")
 def yelp_form():
@@ -49,6 +50,7 @@ def yelp_results():
     elif request.method == "POST": # the form will send a POST
         print("FORM DATA:", dict(request.form))
         request_data = dict(request.form)
+        #request_list = request.form
 
     destination = request_data.get("destination") or "New York"
     days_input = request_data.get("days_input") or "3"
@@ -59,13 +61,14 @@ def yelp_results():
         price_limit.append(str(num + 1))
     #Change this to categories
     #food = []
-    food_preference = request_data.get("food_preference") or "American"
+    food_preference = request.form.getlist("food_preference[]") or "[American, Chinese]"
+    #print(food)
     #food_preference = ""
     #for item in food:
-    #    if item != food[0]:
-    #        food_preference= str(food_preference + "," + item)
-    #    elif item == food[0]:
-    #        food_preference = str(item)
+    #    #if item != food[0]:
+    #    food_preference= str(food_preference + "," + item)
+    #    #elif item == food[0]:
+    #        #food_preference = str(item)
 
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
