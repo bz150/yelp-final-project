@@ -18,30 +18,28 @@ table, th, td {
     
     <table style="width:100%">
       <tr>
-          <th>Vacation Day</th>
           <th>Breakfast</th>
           <th>Lunch</th> 
           <th>Dinner</th>
       </tr>
       <tr>
-        <td>1</td>
         <td>{% for biz in breakfast_results %} 
-          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-          <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
+          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
+          <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
           <img src={{ biz["image_url"] }} 
               width="200"
               height="200" />
           {% endfor %}</td>
         <td>{% for biz in lunch_results %} 
-          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-          <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
+          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
+          <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
           <img src={{ biz["image_url"] }} 
               width="200"
               height="200" />
           {% endfor %}</td>
         <td>{% for biz in dinner_results %} 
-          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-          <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
+          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
+          <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
           <img src={{ biz["image_url"] }} 
               width="200"
               height="200" />
@@ -53,50 +51,5 @@ table, th, td {
     
     </body>
     </html>
-
-    <!--
-    <table style="width:100%">
-        <tr>
-            <th>Vacation Day</th>
-            <th>Breakfast</th>
-            <th>Lunch</th> 
-            <th>Dinner</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>{% for biz in breakfast_results %} 
-            <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-            <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
-            <img src={{ biz["image_url"] }} 
-                width="200"
-                height="200" />
-            {% endfor %}</td>
-          <td>{% for biz in lunch_results %} 
-            <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-            <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
-            <img src={{ biz["image_url"] }} 
-                width="200"
-                height="200" />
-            {% endfor %}</td>
-          <td>{% for biz in dinner_results %} 
-            <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }} | {{ biz['location']['address1'] }}</li>
-            <li>Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
-            <img src={{ biz["image_url"] }} 
-                width="200"
-                height="200" />
-            {% endfor %}</td>
-        </tr>
-
-      </table>
-      
-      </body>
-      </html>
-
-    --> 
-
-    <!-- <p>Zip Code: {{ zip_code }}</p> -->
-
-    <!-- TODO: consider using a table instead of a list -->
-    <!-- TODO: consider adding images using the provided icon urls -->
 
 {% endblock %}
