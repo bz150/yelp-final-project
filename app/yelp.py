@@ -51,6 +51,7 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
+
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
     #LUNCH REQUEST
@@ -66,12 +67,12 @@ def get_response(destination, days_input, price_limit, food_preference):
                 'attributes':'good_for_lunch'
                 }
 
-    # Make a request to the Yelp API for breakfast
+    # Make a request to the Yelp API for lunch
     lunch_response = requests.get(url = link_endpoint,
                             params = lunch_parameters,
                             headers = link_headers)
 
-    # Convert the JSON String to a dictionary for breakfast
+    # Convert the JSON String to a dictionary for lunch
     lunch_parsed_response = json.loads(lunch_response.text)
     lunch_businesses_list = lunch_parsed_response["businesses"]
 
@@ -88,7 +89,7 @@ def get_response(destination, days_input, price_limit, food_preference):
               'location': destination,
               'attributes':'good_for_dinner'
               }
-    # Make a request to the Yelp API for breakfast
+    # Make a request to the Yelp API for dinner
     dinner_response = requests.get(url = link_endpoint,
                             params = dinner_parameters,
                             headers = link_headers)
@@ -193,7 +194,7 @@ if __name__ == "__main__":
     #
     #breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 
-    #Capturing errors for breakfast list (if matches were found, breakfast list = 0)
+    #Capturing errors for breakfast list 
     while True: 
         if len(breakfast_list)==0:
             print("No results for your criteria were found. Please try again!")
@@ -206,26 +207,6 @@ if __name__ == "__main__":
     for biz in breakfast_list: 
         sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
-    # Need to merge every first five list items to be one 
-    # if we want restarant, cat, loc, rating, price to appear in the same row in dataframe
-
-    #
-    # OUPUT - LUNCH
-    #
-
-    #lunch_list = []
-    #
-    #lunch_parameters = {'term': 'lunch',
-    #              'limit': vacation_days, 
-    #              'offset': 50, #basically lets you do pages
-    #              'price': prices, #can change this later
-    #              'radius': 10000, #Change later?
-    #              'categories': food_list_structured,
-    #              'location': destination,
-    #              'attributes':'good_for_lunch'
-    #              }
-    #
-    #lunch_list = get_response(link_endpoint, lunch_parameters, link_headers)
 
     #Capturing errors for lunch list
     while True: 
@@ -298,8 +279,6 @@ if __name__ == "__main__":
 
     meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
     print(meal_itin_df.columns)
-
-    #is there any way to change the row numbers to start with 1?
 
     #
     # REFERENCE DATA STRUCTURE
