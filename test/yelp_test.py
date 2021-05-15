@@ -32,6 +32,9 @@ def test_get_response():
     assert list(test_breakfast_list[0].keys()) == ['id', 'alias', 'name', 'image_url', 'is_closed', 'url', 'review_count', 'categories', 'rating', 'coordinates', 'transactions', 'price', 'location', 'phone', 'display_phone', 'distance']
     
     # look for nested keys, what data type each is (e.g. what you could get if accessing 'id')
+    assert isinstance(test_breakfast_list[0]["categories"],list) # make sure the categories fall into list
+    assert list(test_breakfast_list[0]["categories"][0].keys()) == ['alias', 'title'] # keys of that list should be alias and title
+    
 
 
 # consider making this a fixture

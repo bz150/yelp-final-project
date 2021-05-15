@@ -95,6 +95,8 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
 
+    
+
 #{'alias': 'the-franklin-jersey-city',
 # 'categories': [{'alias': 'breakfast_brunch', 'title': 'Breakfast & Brunch'},
 #                {'alias': 'italian', 'title': 'Italian'}],
@@ -193,6 +195,7 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
+    breakpoint()
 
     #
     # OUPUT - BREAKFAST
