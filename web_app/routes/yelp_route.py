@@ -60,18 +60,30 @@ def yelp_results():
     for num in range(0,len(price)):
         price_limit.append(str(num + 1))
     #Change this to categories
-    #food = []
-    food_preference = request.form.getlist("food_preference") or "[American, Chinese]"
+    food_preference_1 = request.form.get("food_preference1") 
+    food_preference_2 = request.form.get("food_preference2") 
+    food_preference_3 = request.form.get("food_preference3") 
+    food_preference = ""
+    food_list = []
+    if food_preference_1 != None:
+        food_list.append(food_preference_1)
+    if food_preference_2 != None:
+        food_list.append(food_preference_2)
+    if food_preference_3 != None:
+        food_list.append(food_preference_3)
+
+
+    for item in food_list:
+        if item != food_list[0]:
+            food_preference = str(food_preference + "," + item)
+        elif item == food_list[0]:
+            food_preference = str(item)
     
-
-
-    #print(food)
-    #food_preference = ""
-    #for item in food:
-    #    #if item != food[0]:
-    #    food_preference= str(food_preference + "," + item)
-    #    #elif item == food[0]:
-    #        #food_preference = str(item)
+    #If none of the checkboxes are checked, use American food as a default category
+    if len(food_list) == 0:
+        food_preference = "American"
+    
+    print(food_preference)
 
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
