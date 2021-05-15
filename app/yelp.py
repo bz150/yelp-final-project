@@ -31,7 +31,6 @@ def get_response(destination, days_input, price_limit, food_preference):
     
     #BREAKFAST REQUEST
     #Make breakfast parameters
-    breakfast_list = []
 
     breakfast_parameters = {'term': 'breakfast',
               'limit': days_input, # 1 breakfast per vacation day  
@@ -39,6 +38,8 @@ def get_response(destination, days_input, price_limit, food_preference):
               'price': price_limit, #can change this later
               'radius': 10000, #Change later?
               'categories': food_preference,
+              #'categories': [{"alias":"Japanese", "title":"Japanese"}, {"alias":"Mexican", "title":"Mexican"}],
+              #'categories': "Italian, Japanese",
               'location': destination,
               'attributes':'good_for_breakfast',
               }
@@ -55,7 +56,6 @@ def get_response(destination, days_input, price_limit, food_preference):
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
     #LUNCH REQUEST
-    lunch_list = []
 
     lunch_parameters = {'term': 'lunch',
                 'limit': days_input, 
@@ -63,6 +63,9 @@ def get_response(destination, days_input, price_limit, food_preference):
                 'price': price_limit, #can change this later
                 'radius': 10000, #Change later?
                 'categories': food_preference,
+                #'categories': [{"alias":"American", "title":"American"}],
+                #'categories': [{"alias":"Italian", "title":"Italian"}, {"alias":"Mexican", "title":"Mexican"}],
+                #'categories': "Italian, Japanese",
                 'location': destination,
                 'attributes':'good_for_lunch'
                 }
@@ -78,7 +81,6 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     #DINNER REQUEST
 
-    dinner_list = []
 
     dinner_parameters = {'term': 'dinner',
               'limit': days_input, 
@@ -86,6 +88,9 @@ def get_response(destination, days_input, price_limit, food_preference):
               'price': price_limit, #can change this later
               'radius': 10000, #Change later?
               'categories': food_preference,
+              #'categories': [{"alias":"American", "title":"American"}],
+              #'categories': [{"alias":"Japanese", "title":"Japanese"}, {"alias":"Mexican", "title":"Mexican"}],
+              #'categories': "Italian, Japanese",
               'location': destination,
               'attributes':'good_for_dinner'
               }
@@ -127,12 +132,12 @@ if __name__ == "__main__":
     #CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
 
     #INPUTS - read in user inputs
-    destination = input("Where is the destination of your vacation?")
-    days = input("How many days is your vacation?")
+    destination = input("Where is the destination of your vacation? ")
+    days = input("How many days is your vacation? ")
 
     # Capturing Errors for Price Limit inputs (Condense and make more efficient) 
     while True: 
-        price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)?")
+        price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)? ")
         counter_price = len(price_limit)
         if price_limit != "$" and price_limit != "$$" and price_limit != "$$$" and price_limit != "$$$$":
             print("Oops, that's an invalid input. Please try again!")
@@ -147,7 +152,7 @@ if __name__ == "__main__":
     food_variable = True
     food_list = []
     while food_variable == True:
-        food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian?" )
+        food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian? " )
         food_list.append(food_preference)
         if "DONE" in food_list:
             food_list.remove("DONE")
