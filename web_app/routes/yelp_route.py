@@ -66,6 +66,7 @@ def yelp_results():
 
     food_list = []
 
+
     if food_preference_1 != None:
         food_list.append(food_preference_1)
     if food_preference_2 != None:
@@ -83,10 +84,12 @@ def yelp_results():
             food_preference = str(item)
     
     #If none of the checkboxes are checked, use American food as a default category
+
     #if len(food_list) == 0:
     #    food_preference = "American"
     
     print(str(food_preference))
+
 
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
