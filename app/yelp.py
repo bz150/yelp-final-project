@@ -20,9 +20,26 @@ load_dotenv()
 
 
 def function(x):
+    """
+    DESCRIPTION HERE
+    """
     return x+x
 
 def get_response(destination, days_input, price_limit, food_preference):
+    """
+    Fetches restaurant results information from the Yelp API, for a given destination, number of days, price limit, and food preference.
+
+    Params:
+        destination (str) the requested destination, like "New York"
+        days_input (int) the number of days of the vacation, like 3
+        price_limit (list) the requested list of prices to search going up to the price limit, like [1,2,3] (for $$$)
+        food_preference (str) the requested food cuisine preferences, like "American, Chinese"
+
+    Example:
+        breakfast_list, lunch_list, dinner_list = get_response(destination="New York", days_input=3, price_limit=[1,2,3], food_preference="American, Chinese")
+
+    Returns the restaurant information for breakfast, lunch, and dinner through "breakfast_businesses_list", "lunch_businesses_list", "dinner_businesses_list" for the number of vacation days 
+    """
     #ACQUIRE API KEY
     API_KEY = os.environ.get("YELP_API_KEY")
 
