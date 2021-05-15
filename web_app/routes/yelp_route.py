@@ -63,15 +63,18 @@ def yelp_results():
     food_preference_1 = request.form.get("food_preference1") 
     food_preference_2 = request.form.get("food_preference2") 
     food_preference_3 = request.form.get("food_preference3") 
-    food_preference = ""
+
     food_list = []
+
     if food_preference_1 != None:
         food_list.append(food_preference_1)
     if food_preference_2 != None:
         food_list.append(food_preference_2)
     if food_preference_3 != None:
         food_list.append(food_preference_3)
-
+    
+    food_preference = ""
+    
 
     for item in food_list:
         if item != food_list[0]:
@@ -80,17 +83,17 @@ def yelp_results():
             food_preference = str(item)
     
     #If none of the checkboxes are checked, use American food as a default category
-    if len(food_list) == 0:
-        food_preference = "American"
+    #if len(food_list) == 0:
+    #    food_preference = "American"
     
-    print(food_preference)
+    print(str(food_preference))
 
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
     if breakfast_results and lunch_results and dinner_results:
         flash(f"Yelp Results Generated Successfully!", "success")
         return render_template("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
     else:
-        flash(f"Input Error. Please try again!", "danger")
+        flash(f"Input Error - No Results Found. Please try again with different inputs!", "danger")
         return redirect("/yelp/form")
 
 
