@@ -5,24 +5,28 @@
 {% block content %}
 
     <h2>Yelp Form</h2>
-
+    <!-- Display a photo at the time of the web app -->
     <img src="https://images.mygoodtimes.in/wp-content/uploads/2019/08/29104300/global-food-main.jpg"
         width="450"
         height="300"
         />
 
+    <!-- Caption for the Yelp Form -->
     <p>Request a Yelp food itinerary for your vacation:</p>
 
     <form action="/yelp/results" method="POST">
 
+        <!-- Text box input for the destination with New York as the default -->
         <label>Destination:</label>
         <input type="text" name="destination" placeholder="New York" value="New York">
         <br>
 
+        <!-- Integer box input for the number of days of vacation with 3 as the default -->
         <label>Days:</label>
         <input type="number" name="days_input" placeholder="3" value="3">
         <br>
 
+        <!-- Radio input (selection) for the price limit -->
         <label>Price Limit:</label>
         <br>
         <input type="radio" id="$" name="price_limit" value="$">
@@ -35,6 +39,7 @@
         <label for="$$$$">$$$$</label>
         <br>
 
+        <!-- Checkboxes inputs for the food preferences  -->
         <label>Food Preference:</label>
         <br>
         <input type="checkbox" id="chinese_food" name="food_preference1" value="Chinese">
@@ -51,15 +56,3 @@
 
 {% endblock %}
 
-<!-- 
-        <label>Food Preference:</label>
-        <br>
-        <input type="checkbox" id="chinese_food" name="food_preference[]" value="Chinese">
-        <label for="chinese_food"> Chinese</label><br>
-        <input type="checkbox" id="american_food" name="food_preference[]" value="American">
-        <label for="american_food"> American</label><br>
-        <input type="checkbox" id="italian_food" name="food_preference[]" value="Italian">
-        <label for="italian_food"> Italian</label>
-        <br>
-        <button>Submit</button>
--->
