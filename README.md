@@ -43,7 +43,7 @@ Obtain an API Key from Yelp Fusion API (https://www.yelp.com/developers/document
 
 Run the program: 
 ```sh
-python app/yelp_app.py (or python -m app.yelp_app)
+python app/yelp.py (or python -m app.yelp_app)
 ```
 ## Web App
 
