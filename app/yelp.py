@@ -18,13 +18,6 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv()
 
-
-def function(x):
-    """
-    DESCRIPTION HERE
-    """
-    return x+x
-
 def get_response(destination, days_input, price_limit, food_preference):
     """
     Fetches restaurant results information from the Yelp API, for a given destination, number of days, price limit, and food preference.
@@ -48,7 +41,7 @@ def get_response(destination, days_input, price_limit, food_preference):
     
     #BREAKFAST REQUEST
     #Make breakfast parameters
-
+    ###breakfast_list = []
     breakfast_parameters = {'term': 'breakfast',
               'limit': days_input, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
@@ -73,7 +66,7 @@ def get_response(destination, days_input, price_limit, food_preference):
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
     #LUNCH REQUEST
-
+    ###lunch_list = []
     lunch_parameters = {'term': 'lunch',
                 'limit': days_input, 
                 'offset': 50, #basically lets you do pages
@@ -97,8 +90,7 @@ def get_response(destination, days_input, price_limit, food_preference):
     lunch_businesses_list = lunch_parsed_response["businesses"]
 
     #DINNER REQUEST
-
-
+    ###dinner_list = []
     dinner_parameters = {'term': 'dinner',
               'limit': days_input, 
               'offset': 50, #basically lets you do pages
@@ -119,8 +111,6 @@ def get_response(destination, days_input, price_limit, food_preference):
     # Convert the JSON String to a dictionary for breakfast
     dinner_parsed_response = json.loads(dinner_response.text)
     dinner_businesses_list = dinner_parsed_response["businesses"]
-
-
 
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
 
@@ -189,12 +179,20 @@ if __name__ == "__main__":
     for num in range(0,counter_price):
         prices.append(str(num + 1))
 
+    # structure prices as one comma delimited string
+    prices_structured = ""
+    for y in prices:
+        if y != prices[0]:
+            prices_structured = str(prices_structured + "," + y)
+        elif y == prices[0]:
+            prices_structured = str(y)
+
     # Limit for breakfast params 
     vacation_days = int(days)
 
 
     #CALLING THE REQUESTS FROM THE FUNCTION
-    breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
+    breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices_structured, food_list_structured)
 
 
     #
@@ -288,6 +286,8 @@ if __name__ == "__main__":
     print(sorted_lunch_list)
     print(" dinner")
     print(sorted_dinner_list)
+
+    breakpoint()
 
     meals_data = {
         'Breakfast': sorted_breakfast_list, 

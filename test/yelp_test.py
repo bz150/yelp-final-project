@@ -1,6 +1,6 @@
 # import the code we want to test
 
-from app.yelp_app import get_response
+from app.yelp import get_response
 
 import pytest
 import os
@@ -17,24 +17,22 @@ CI_ENV = os.getenv("CI") == "true"
 
 @pytest.mark.skipif(CI_ENV==True, reason="to avoid issuing HTTP requests on the CI server") # skips this test on CI
 def test_get_response():
-    destination = "Washington DC"
-    days_input = 1
-    price_limit = "1,2"
-    food_preference = "American"
+    destination = "Albany, New York"
+    days_input = 4
+    price_limit = "1,2,3,4"
+    food_preference = "American,Italian"
     test_breakfast_list, test_lunch_list, test_dinner_list = get_response(destination, days_input, price_limit, food_preference) # issues an HTTP request (see function definition below)
-    
     # function should return three lists, each having some items
     assert isinstance(test_breakfast_list, list)
     assert isinstance(test_lunch_list, list)
     assert isinstance(test_dinner_list, list)
-
     # make sure results have the right keys
     assert list(test_breakfast_list[0].keys()) == ['id', 'alias', 'name', 'image_url', 'is_closed', 'url', 'review_count', 'categories', 'rating', 'coordinates', 'transactions', 'price', 'location', 'phone', 'display_phone', 'distance']
-    
     # look for nested keys, what data type each is (e.g. what you could get if accessing 'id')
     assert isinstance(test_breakfast_list[0]["categories"],list) # make sure the categories fall into list
     assert list(test_breakfast_list[0]["categories"][0].keys()) == ['alias', 'title'] # keys of that list should be alias and title
-    
+    # in ideal circumstance, the function should show the same number of results in each
+    assert len(test_breakfast_list) == len(test_lunch_list) == len(test_dinner_list)
 
 
 # consider making this a fixture
