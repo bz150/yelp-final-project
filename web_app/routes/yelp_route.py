@@ -65,6 +65,7 @@ def yelp_results():
     for num in range(0,len(price)):
         price_limit.append(str(num + 1))
     #Change this to categories
+
     #Request food preference information from separate checkboxes
     food_preference_1 = request_data.get("food_preference1") 
     food_preference_2 = request_data.get("food_preference2") 
