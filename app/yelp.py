@@ -42,6 +42,7 @@ def get_response(destination, days_input, price_limit, food_preference):
     #BREAKFAST REQUEST
     #Make breakfast parameters
     ###breakfast_list = []
+    
     breakfast_parameters = {'term': 'breakfast',
               'limit': days_input, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
@@ -116,7 +117,9 @@ def get_response(destination, days_input, price_limit, food_preference):
 
 
 if __name__ == "__main__":
-
+    breakfast_list = []
+    lunch_list = []
+    dinner_list = []
     #def get_response(response_endpoint, response_parameters, response_headers):
     #    # Make a request to the Yelp API
     #    response = requests.get(url = response_endpoint,
@@ -135,7 +138,6 @@ if __name__ == "__main__":
     #link_endpoint = 'https://api.yelp.com/v3/businesses/search'
     #link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
-
     #CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
 
     #INPUTS - read in user inputs
@@ -152,7 +154,7 @@ if __name__ == "__main__":
         else:
             break
 
-
+    
     #for testing, change later
     #Create list for food preferences
     #VALIDATE CATEGORY ENTRIES FROM USER (try / except function?)
@@ -287,7 +289,7 @@ if __name__ == "__main__":
     print(" dinner")
     print(sorted_dinner_list)
 
-    breakpoint()
+    #breakpoint()
 
     meals_data = {
         'Breakfast': sorted_breakfast_list, 
@@ -300,7 +302,6 @@ if __name__ == "__main__":
     print(meal_itin_df)
 
     meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
-    print(meal_itin_df.columns)
 
     #
     # REFERENCE DATA STRUCTURE
@@ -356,7 +357,4 @@ if __name__ == "__main__":
     #business_data = response.json()
     #print(parsed_response.keys())
     #print(parsed_response)
-
-    #for biz in businesses:
-    #    print(biz['name'])
 
