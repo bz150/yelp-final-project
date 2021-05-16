@@ -36,6 +36,7 @@ def get_response(destination, days_input, price_limit, food_preference):
     #ACQUIRE API KEY
     API_KEY = os.environ.get("YELP_API_KEY")
 
+    #Endpoint and headers using API Key
     link_endpoint = 'https://api.yelp.com/v3/businesses/search'
     link_headers = {'Authorization': 'bearer %s' % API_KEY}
     
@@ -43,6 +44,7 @@ def get_response(destination, days_input, price_limit, food_preference):
     #Make breakfast parameters
     ###breakfast_list = []
     
+    #Read in parameters for the breakfast request using the inputs
     breakfast_parameters = {'term': 'breakfast',
               'limit': days_input, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
@@ -63,11 +65,12 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
-
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
     #LUNCH REQUEST
     ###lunch_list = []
+
+    #Read in parameters for the lunch request using the inputs
     lunch_parameters = {'term': 'lunch',
                 'limit': days_input, 
                 'offset': 50, #basically lets you do pages
@@ -92,6 +95,8 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     #DINNER REQUEST
     ###dinner_list = []
+
+    #Read in parameters for the dinner request using the inputs
     dinner_parameters = {'term': 'dinner',
               'limit': days_input, 
               'offset': 50, #basically lets you do pages
@@ -113,10 +118,13 @@ def get_response(destination, days_input, price_limit, food_preference):
     dinner_parsed_response = json.loads(dinner_response.text)
     dinner_businesses_list = dinner_parsed_response["businesses"]
 
+    #Return separate breakfast, lunch, and dinner lists
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
 
 
 if __name__ == "__main__":
+
+    #Create lists to hold the breakfast, lunch, and dinner results
     breakfast_list = []
     lunch_list = []
     dinner_list = []
@@ -141,10 +149,12 @@ if __name__ == "__main__":
     #CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
 
     #INPUTS - read in user inputs
+    #Read in the user's destination and number of days for vacation
     destination = input("Where is the destination of your vacation? ")
     days = input("How many days is your vacation? ")
 
-    # Capturing Errors for Price Limit inputs (Condense and make more efficient) 
+    #
+    # Capturing Errors for Price Limit inputs and validating input 
     while True: 
         price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)? ")
         counter_price = len(price_limit)
@@ -160,6 +170,7 @@ if __name__ == "__main__":
     #VALIDATE CATEGORY ENTRIES FROM USER (try / except function?)
     food_variable = True
     food_list = []
+    #Stop asking for food preference inputs when user says DONE
     while food_variable == True:
         food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian? " )
         food_list.append(food_preference)
@@ -178,7 +189,8 @@ if __name__ == "__main__":
     #Create list for price
     prices = []
 
-    for num in range(0,counter_price):
+    #Add price limit (and all prices after) into the price list
+    for num in range(0, counter_price):
         prices.append(str(num + 1))
 
     # structure prices as one comma delimited string
@@ -189,11 +201,11 @@ if __name__ == "__main__":
         elif y == prices[0]:
             prices_structured = str(y)
 
-    # Limit for breakfast params 
+    # Change the vacation days input into an integer
     vacation_days = int(days)
 
 
-    #CALLING THE REQUESTS FROM THE FUNCTION
+    #CALLING THE REQUESTS FROM THE FUNCTION and reading into breakfast, lunch, dinner lists
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices_structured, food_list_structured)
 
 
@@ -216,30 +228,31 @@ if __name__ == "__main__":
     #
     #breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
 
-    #Capturing errors for breakfast list 
+    #Capturing errors for breakfast list if not enough results found
     while True: 
         if len(breakfast_list)==0:
             print("No results for your criteria were found. Please try again!")
             break
         else: 
             break
-    #
+    #Create list for breakfast list with titles of each output
     sorted_breakfast_list = [ ]
-    #
+    #Go through breakfast list and add outputs to the sorted list
     for biz in breakfast_list: 
         sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
 
-    #Capturing errors for lunch list
+    #Capturing errors for lunch list if not enough results found
     while True: 
         if len(lunch_list)==0:
             print("No results for your criteria were found. Please try again!")
             break
         else: 
             break
-    #
+    
+    #Create list for lunch with titles of each output
     sorted_lunch_list = [ ]
-
+    #Go through lunch list and add outputs to the sorted list
     for biz in lunch_list: 
         sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
@@ -261,7 +274,7 @@ if __name__ == "__main__":
     #
     #dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
 
-    #Capturing errors for dinner list
+    #Capturing errors for dinner list if not enough results found
     while True: 
         if len(dinner_list)==0:
             print("No results for your criteria were found. Please try again!")
@@ -269,8 +282,10 @@ if __name__ == "__main__":
         else: 
             break
 
+    #Create list for dinner with titles of each output
     sorted_dinner_list = [ ]
 
+    #Go through dinner list and add outputs to the sorted list
     for biz in dinner_list: 
         sorted_dinner_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
@@ -281,7 +296,7 @@ if __name__ == "__main__":
 
     #
     # FINAL OUTPUT BELOW
-    #
+    #Print final output
     print(" breakfast")
     print(sorted_breakfast_list)
     print(" lunch")
@@ -291,13 +306,14 @@ if __name__ == "__main__":
 
     #breakpoint()
 
+    #Add outputs to a dictionary
     meals_data = {
         'Breakfast': sorted_breakfast_list, 
         'Lunch': sorted_lunch_list, 
         'Dinner': sorted_dinner_list
     }
 
-
+    #Turn outputs dictionary into a dataframe
     meal_itin_df = pd.DataFrame(meals_data)
     print(meal_itin_df)
 
