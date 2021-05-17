@@ -26,37 +26,51 @@ table, th, td {
           <th>Dinner</th>
       </tr>
 
-      <!-- Breakfast results -->
+      <!-- Breakfast results displayed as cards -->
       <tr>
         <td>{% for biz in breakfast_results %} 
-          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
-          <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
-          <img src={{ biz["image_url"] }} 
+          <div class="card" style="width: 18rem;">
+            <img src={{ biz["image_url"] }} class="card-img-top"
               width="200"
               height="200" />
+            <div class="card-body">
+              <h5 class="card-title">{{ biz["name"] }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ biz['location']['address1'] }}</h6>
+              <p class="card-text">{{ biz['categories'][0]['title'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</p>
+            </div>
+          </div>
           {% endfor %}</td>
 
-      <!-- Lunch results -->
+      <!-- Lunch results displayed as cards -->
         <td>{% for biz in lunch_results %} 
-          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
-          <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
-          <img src={{ biz["image_url"] }} 
+          <div class="card" style="width: 18rem;">
+            <img src={{ biz["image_url"] }} class="card-img-top"
               width="200"
               height="200" />
+            <div class="card-body">
+              <h5 class="card-title">{{ biz["name"] }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ biz['location']['address1'] }}</h6>
+              <p class="card-text">{{ biz['categories'][0]['title'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</p>
+            </div>
+          </div>
           {% endfor %}</td>
           
-      <!-- Dinner results -->
+      <!-- Dinner results displayed as cards -->
         <td>{% for biz in dinner_results %} 
-          <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
-          <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
-          <img src={{ biz["image_url"] }} 
+          <div class="card" style="width: 18rem;">
+            <img src={{ biz["image_url"] }} class="card-img-top"
               width="200"
               height="200" />
+            <div class="card-body">
+              <h5 class="card-title">{{ biz["name"] }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ biz['location']['address1'] }}</h6>
+              <p class="card-text">{{ biz['categories'][0]['title'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</p>
+            </div>
+          </div>
           {% endfor %}</td>
       </tr>
 
     </table>
-    
     
     </body>
     </html>
