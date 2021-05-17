@@ -35,6 +35,8 @@ def sort_meal_list(meal_list):
         sorted_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
     return sorted_list
 
+
+
 def get_response(destination, days_input, price_limit, food_preference):
     """
     Fetches restaurant results information from the Yelp API, for a given destination, number of days, price limit, and food preference.
@@ -210,20 +212,12 @@ if __name__ == "__main__":
     for num in range(0, counter_price):
         prices.append(str(num + 1))
 
-    # structure prices as one comma delimited string
-    prices_structured = ""
-    for y in prices:
-        if y != prices[0]:
-            prices_structured = str(prices_structured + "," + y)
-        elif y == prices[0]:
-            prices_structured = str(y)
-
     # Change the vacation days input into an integer
     vacation_days = int(days)
 
 
     #CALLING THE REQUESTS FROM THE FUNCTION and reading into breakfast, lunch, dinner lists
-    breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices_structured, food_list_structured)
+    breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
 
     #
