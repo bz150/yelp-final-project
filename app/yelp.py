@@ -219,7 +219,6 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION and reading into breakfast, lunch, dinner lists
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
-
     #
     # OUPUT - BREAKFAST
     #
@@ -271,7 +270,7 @@ if __name__ == "__main__":
     #    sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
     sorted_lunch_list = sort_meal_list(lunch_list)
-
+    
     #
     # OUPUT - DINNER
     #
