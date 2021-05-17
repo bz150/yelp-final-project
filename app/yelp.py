@@ -255,10 +255,12 @@ if __name__ == "__main__":
     #Create list for breakfast list with titles of each output
     sorted_breakfast_list = [ ]
     #Go through breakfast list and add outputs to the sorted list
+
     #for biz in breakfast_list: 
     #    sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
     sorted_breakfast_list = sort_meal_list(breakfast_list)
+
     #Capturing errors for lunch list if not enough results found
     while True: 
         if len(lunch_list)==0:
@@ -270,10 +272,12 @@ if __name__ == "__main__":
     #Create list for lunch with titles of each output
     sorted_lunch_list = [ ]
     #Go through lunch list and add outputs to the sorted list
+
     #for biz in lunch_list: 
     #    sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
 
     sorted_lunch_list = sort_meal_list(lunch_list)
+
     #
     # OUPUT - DINNER
     #
@@ -304,9 +308,11 @@ if __name__ == "__main__":
     sorted_dinner_list = [ ]
 
     #Go through dinner list and add outputs to the sorted list
+
     #for biz in dinner_list: 
     #    sorted_dinner_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
     sorted_dinner_list = sort_meal_list(dinner_list)
+
 
 
     #WEB APP OUTPUT
