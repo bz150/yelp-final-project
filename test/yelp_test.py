@@ -1,12 +1,12 @@
 # import the code we want to test
 
 from app.yelp import get_response
+from app.yelp import sort_meal_list
 
 import pytest
 import os
 import requests
 import json
-import pandas as pd
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -15,12 +15,17 @@ load_dotenv()
 # see: https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
 CI_ENV = os.getenv("CI") == "true"
 
+#
+# GET RESPONSE
+#
+
+# test valid input - can find all the necessary inputs
 @pytest.mark.skipif(CI_ENV==True, reason="to avoid issuing HTTP requests on the CI server") # skips this test on CI
-def test_get_response():
-    destination = "Washington D.C."
-    days_input = 3
+def test_get_response_valid():
+    destination = "New York"
+    days_input = 2
     price_limit = "1,2,3,4"
-    food_preference = "Chinese"
+    food_preference = "chinese, american"
     test_breakfast_list, test_lunch_list, test_dinner_list = get_response(destination, days_input, price_limit, food_preference) # issues an HTTP request (see function definition below)
     
     # function should return three lists, each having some items
@@ -36,7 +41,57 @@ def test_get_response():
     assert list(test_breakfast_list[0]["categories"][0].keys()) == ['alias', 'title'] # keys of that list should be alias and title
     
     # in ideal circumstance, the function should show the same number of results in each
-    assert len(test_breakfast_list) == len(test_lunch_list) == len(test_dinner_list)
+    assert len(test_breakfast_list) == days_input
+    assert len(test_lunch_list) == days_input
+    assert len(test_dinner_list) == days_input
+
+
+# test invalid input - cannot find enough matching restaurants
+@pytest.mark.skipif(CI_ENV==True, reason="to avoid issuing HTTP requests on the CI server") # skips this test on CI
+def test_get_response_invalid():
+    destination = "Washington DC"
+    days_input = 4
+    price_limit = "1,2,3,4"
+    food_preference = "chinese"
+    test_breakfast_list, test_lunch_list, test_dinner_list = get_response(destination, days_input, price_limit, food_preference) # issues an HTTP request (see function definition below)
+    
+    # function should return three lists, each having some items
+    assert isinstance(test_breakfast_list, list)
+    assert isinstance(test_lunch_list, list)
+    assert isinstance(test_dinner_list, list)
+    
+    # breakfast should not be able to find any results
+    assert len(test_breakfast_list) == 0
+    assert len(test_lunch_list) == days_input
+    assert len(test_dinner_list) == days_input
+
+    # make sure lunch results have the right keys
+    assert list(test_lunch_list[0].keys()) == ['id', 'alias', 'name', 'image_url', 'is_closed', 'url', 'review_count', 'categories', 'rating', 'coordinates', 'transactions', 'price', 'location', 'phone', 'display_phone', 'distance']
+    
+#
+# SORT MEAL LIST
+#
+#
+#test_lunch_list_filepath = os.path.join(os.path.dirname(__file__),"test","mock_data","test_lunch_results".csv")
+#test_lunch_list_df = read_csv(test_lunch_list_filepath)
+##test_lunch_list = test_lunch_list_df.to_dict("businesses")
+#
+#def test_sort_meal_list():
+#    sorted_test_list = sort_meal_list(test_lunch_list)
+#    assert sorted_test_list == "['Restaurant: Som Bo | Category: Asian Fusion | Location: 143 8th Ave | Rating: 4.0 | Price: $$', 'Restaurant: Spicy Village | Category: Chinese | Location: 68 Forsyth St | Rating: 4.0 | Price: $']"
+
+# with valid product id, returns the product info:
+#    valid_result = lookup_product("8",mock_products)
+#    assert valid_result == {
+#        'aisle':'Aisle C',
+#        'department':'snacks',
+#        'id':8,
+#        'name':'Product 8',
+#        'price':10.0
+#    }
+#    # with invalid product id, returns None:
+#    invalid_result = lookup_product("88888888",mock_products)
+#    assert invalid_result == None
 
 
 # consider making this a fixture
