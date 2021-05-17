@@ -96,8 +96,10 @@ def yelp_results():
 
     #if len(food_list) == 0:
     #    food_preference = "American"
+
+    food_preference = food_preference.lower()
     
-    print(str(food_preference))
+    print(food_preference)
 
     #Get response from the original function using web app inputs
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
