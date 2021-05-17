@@ -16,12 +16,17 @@ table, th, td {
     <!-- Caption for the page -->
     <h2>Food Itinerary for {{ destination }}</h2>
     
+    <!--Table for compiled meal itinerary -->
     <table style="width:100%">
+
+      <!-- Headers for Table -->
       <tr>
           <th>Breakfast</th>
           <th>Lunch</th> 
           <th>Dinner</th>
       </tr>
+
+      <!-- Breakfast results -->
       <tr>
         <td>{% for biz in breakfast_results %} 
           <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
@@ -30,6 +35,8 @@ table, th, td {
               width="200"
               height="200" />
           {% endfor %}</td>
+
+      <!-- Lunch results -->
         <td>{% for biz in lunch_results %} 
           <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
           <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
@@ -37,6 +44,8 @@ table, th, td {
               width="200"
               height="200" />
           {% endfor %}</td>
+          
+      <!-- Dinner results -->
         <td>{% for biz in dinner_results %} 
           <li>{{ biz["name"] }} | {{ biz['categories'][0]['title'] }}</li>
           <li>{{ biz['location']['address1'] }} | Rating: {{ biz["rating"] }} | {{ biz['price'] }}</li>
