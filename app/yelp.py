@@ -35,7 +35,25 @@ def sort_meal_list(meal_list):
         sorted_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
     return sorted_list
 
+
+
 def get_request(term, attributes, destination, days_input, price_limit, food_preference):
+    """
+    Fetches restaurant information from the Yelp API for a given meal term, meal attribute, destination, number of days of vacation, price limit, and food preference.
+
+    Params:
+        term (str) the specific meal, like "breakfast"
+        attributes (str) the specific meal, like "good_for_breakfast"
+        destination (str) the requested destination, like "New York"
+        days_input (int) the number of days of the vacation, like 3
+        price_limit (list) the requested list of prices to search going up to the price limit, like [1,2,3] (for $$$)
+        food_preference (str) the requested food cuisine preferences, like "American, Chinese"
+
+    Example:
+        breakfast_list, lunch_list, dinner_list = get_request(term="breakfast", attributes="good_for_breakfast",destination="New York", days_input=3, price_limit=[1,2,3], food_preference="American, Chinese")
+
+    Returns the request for a specific meal through "meal_response".
+    """
     #ACQUIRE API KEY
     API_KEY = os.environ.get("YELP_API_KEY")
 
@@ -43,7 +61,7 @@ def get_request(term, attributes, destination, days_input, price_limit, food_pre
     link_endpoint = 'https://api.yelp.com/v3/businesses/search'
     link_headers = {'Authorization': 'bearer %s' % API_KEY}
 
-    
+    #Read in the inputted parameters for a given meal
     meal_parameters = {'term': term,
               'limit': days_input, # 1 breakfast per vacation day  
               'offset': 50, #basically lets you do pages
@@ -54,15 +72,18 @@ def get_request(term, attributes, destination, days_input, price_limit, food_pre
               'attributes': attributes,
               }
     
+    #Make a request to the Yelp API using the correct parameters
     meal_response = requests.get(url = link_endpoint,
                             params = meal_parameters,
                             headers = link_headers)
+    
+    #Return the request
     return meal_response
 
 
 def get_response(destination, days_input, price_limit, food_preference):
     """
-    Fetches restaurant results information from the Yelp API, for a given destination, number of days, price limit, and food preference.
+    Creates a list based on the restaurant results information from the get_request function, for a given destination, number of days, price limit, and food preference for each meal.
 
     Params:
         destination (str) the requested destination, like "New York"
@@ -73,61 +94,21 @@ def get_response(destination, days_input, price_limit, food_preference):
     Example:
         breakfast_list, lunch_list, dinner_list = get_response(destination="New York", days_input=3, price_limit=[1,2,3], food_preference="American, Chinese")
 
-    Returns the restaurant information for breakfast, lunch, and dinner through "breakfast_businesses_list", "lunch_businesses_list", "dinner_businesses_list" for the number of vacation days 
+    Returns the restaurant information list for breakfast, lunch, and dinner through "breakfast_businesses_list", "lunch_businesses_list", "dinner_businesses_list" for the number of vacation days. 
     """
-    #ACQUIRE API KEY
-    #API_KEY = os.environ.get("YELP_API_KEY")
-#
-    ##Endpoint and headers using API Key
-    #link_endpoint = 'https://api.yelp.com/v3/businesses/search'
-    #link_headers = {'Authorization': 'bearer %s' % API_KEY}
-    
+
     #BREAKFAST REQUEST
-    #Make breakfast parameters
-    
-    #Read in parameters for the breakfast request using the inputs
-    #breakfast_parameters = {'term': 'breakfast',
-    #          'limit': days_input, # 1 breakfast per vacation day  
-    #          'offset': 50, #basically lets you do pages
-    #          'price': price_limit, #can change this later
-    #          'radius': 10000, #Change later?
-    #          'categories': food_preference,
-    #          'location': destination,
-    #          'attributes':'good_for_breakfast',
-    #          }
-
-
-    # Make a request to the Yelp API for breakfast
-    #breakfast_response = requests.get(url = link_endpoint,
-    #                        params = breakfast_parameters,
-    #                        headers = link_headers)
-
+    #Get breakfast request using the correct term and attribute
     breakfast_term = 'breakfast'
     breakfast_attribute = 'good_for_breakfast'
     breakfast_response = get_request(breakfast_term, breakfast_attribute, destination, days_input, price_limit, food_preference)
-
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
+    
     #LUNCH REQUEST
-
-    #Read in parameters for the lunch request using the inputs
-    #lunch_parameters = {'term': 'lunch',
-    #            'limit': days_input, 
-    #            'offset': 50, #basically lets you do pages
-    #            'price': price_limit, #can change this later
-    #            'radius': 10000, #Change later?
-    #            'categories': food_preference,
-    #            'location': destination,
-    #            'attributes':'good_for_lunch'
-    #            }
-
-    # Make a request to the Yelp API for lunch
-    #lunch_response = requests.get(url = link_endpoint,
-    #                        params = lunch_parameters,
-    #                        headers = link_headers)
-
+    #Get lunch request using the correct term and attribute
     lunch_term = 'lunch'
     lunch_attribute = 'good_for_lunch'
     lunch_response = get_request(lunch_term, lunch_attribute, destination, days_input, price_limit, food_preference)
@@ -137,27 +118,12 @@ def get_response(destination, days_input, price_limit, food_preference):
     lunch_businesses_list = lunch_parsed_response["businesses"]
 
     #DINNER REQUEST
-
-    #Read in parameters for the dinner request using the inputs
-    #dinner_parameters = {'term': 'dinner',
-    #          'limit': days_input, 
-    #          'offset': 50, #basically lets you do pages
-    #          'price': price_limit, #can change this later
-    #          'radius': 10000, #Change later?
-    #          'categories': food_preference,
-    #          'location': destination,
-    #          'attributes':'good_for_dinner'
-    #          }
-    # Make a request to the Yelp API for dinner
-    #dinner_response = requests.get(url = link_endpoint,
-    #                        params = dinner_parameters,
-    #                        headers = link_headers)
-
+    #Get dinner request using the correct term and attribute
     dinner_term = 'dinner'
     dinner_attribute = 'good_for_dinner'
     dinner_response = get_request(dinner_term, dinner_attribute, destination, days_input, price_limit, food_preference)
     
-    # Convert the JSON String to a dictionary for breakfast
+    # Convert the JSON String to a dictionary for dinner
     dinner_parsed_response = json.loads(dinner_response.text)
     dinner_businesses_list = dinner_parsed_response["businesses"]
 
@@ -183,11 +149,7 @@ if __name__ == "__main__":
     #    return businesses_list
     #
 
-    # Define my API Key, My Endpoint, and My Header
-    #API_KEY = os.environ.get("YELP_API_KEY")
-    #
-    #link_endpoint = 'https://api.yelp.com/v3/businesses/search'
-    #link_headers = {'Authorization': 'bearer %s' % API_KEY}
+    
 
     #CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
 
