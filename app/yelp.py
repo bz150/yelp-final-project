@@ -193,8 +193,8 @@ if __name__ == "__main__":
     while food_variable == True:
         food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian? " )
         food_list.append(food_preference.lower())
-        if "DONE" in food_list:
-            food_list.remove("DONE")
+        if "done" in food_list:
+            food_list.remove("done")
             food_variable = False
 
     # Sturcture new food inputs as one comma delimited string
