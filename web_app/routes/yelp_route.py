@@ -6,34 +6,6 @@ from app.yelp import get_response
 
 yelp_route = Blueprint("yelp_route", __name__)
 
-#@yelp_route.route("/yelp/results.json")
-#def yelp_results_api():
-#    print("YELP RESULTS...")
-#    print("URL PARAMS:", dict(request.args))
-#
-#
-#    destination = request.args.get("destination") or "New York"
-#    days_input = request.args.get("days_input") or "3"
-#    days_input=int(days_input)
-#    price = request.args.get("price_limit") or ["1", "2", "3"]
-#    price_limit = []
-#    for num in range(0,len(price)):
-#        price_limit.append(str(num + 1))
-#    #Change this to categories
-#    food = []
-#    food = request.args.get("food_preference") or "American"
-#    print(food)
-#    food_preference = ""
-#    for item in food:
-#        #if item != food[0]:
-#        food_preference= str(food_preference + "," + item)
-#        #elif item == food[0]:
-#        #    food_preference = str(item)
-#    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
-#    if breakfast_results and lunch_results and dinner_results:
-#        return jsonify(breakfast_results, lunch_results, dinner_results)
-#    else:
-#        return jsonify({"message":"Invalid Inputs. Please try again."}), 404
 
 #Route to the Yelp input form
 @yelp_route.route("/yelp/form")
@@ -70,6 +42,9 @@ def yelp_results():
     food_preference_1 = request_data.get("food_preference1") 
     food_preference_2 = request_data.get("food_preference2") 
     food_preference_3 = request_data.get("food_preference3") 
+    food_preference_4 = request_data.get("food_preference4") 
+    food_preference_5 = request_data.get("food_preference5") 
+    food_preference_6 = request_data.get("food_preference6") 
 
     #Create list to hold food preferences
     food_list = []
@@ -81,6 +56,12 @@ def yelp_results():
         food_list.append(food_preference_2)
     if food_preference_3 != None:
         food_list.append(food_preference_3)
+    if food_preference_4 != None:
+        food_list.append(food_preference_4)
+    if food_preference_5 != None:
+        food_list.append(food_preference_5)
+    if food_preference_6 != None:
+        food_list.append(food_preference_6)
     
     #Create a string to hold final food preference parameter
     food_preference = ""
@@ -93,13 +74,12 @@ def yelp_results():
             food_preference = str(item)
     
     #If none of the checkboxes are checked, use American food as a default category
+    if len(food_list) == 0:
+        food_preference = "American"
 
-    #if len(food_list) == 0:
-    #    food_preference = "American"
-
+    #Ensure that food preferences start in lowercase to be successfully used in the API
     food_preference = food_preference.lower()
-    
-    print(food_preference)
+
 
     #Get response from the original function using web app inputs
     breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)

@@ -35,6 +35,29 @@ def sort_meal_list(meal_list):
         sorted_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
     return sorted_list
 
+def get_request(term, attributes, destination, days_input, price_limit, food_preference):
+    #ACQUIRE API KEY
+    API_KEY = os.environ.get("YELP_API_KEY")
+
+    #Endpoint and headers using API Key
+    link_endpoint = 'https://api.yelp.com/v3/businesses/search'
+    link_headers = {'Authorization': 'bearer %s' % API_KEY}
+
+    
+    meal_parameters = {'term': term,
+              'limit': days_input, # 1 breakfast per vacation day  
+              'offset': 50, #basically lets you do pages
+              'price': price_limit, #can change this later
+              'radius': 10000, #Change later?
+              'categories': food_preference,
+              'location': destination,
+              'attributes': attributes,
+              }
+    
+    meal_response = requests.get(url = link_endpoint,
+                            params = meal_parameters,
+                            headers = link_headers)
+    return meal_response
 
 
 def get_response(destination, days_input, price_limit, food_preference):
@@ -53,86 +76,87 @@ def get_response(destination, days_input, price_limit, food_preference):
     Returns the restaurant information for breakfast, lunch, and dinner through "breakfast_businesses_list", "lunch_businesses_list", "dinner_businesses_list" for the number of vacation days 
     """
     #ACQUIRE API KEY
-    API_KEY = os.environ.get("YELP_API_KEY")
-
-    #Endpoint and headers using API Key
-    link_endpoint = 'https://api.yelp.com/v3/businesses/search'
-    link_headers = {'Authorization': 'bearer %s' % API_KEY}
+    #API_KEY = os.environ.get("YELP_API_KEY")
+#
+    ##Endpoint and headers using API Key
+    #link_endpoint = 'https://api.yelp.com/v3/businesses/search'
+    #link_headers = {'Authorization': 'bearer %s' % API_KEY}
     
     #BREAKFAST REQUEST
     #Make breakfast parameters
-    ###breakfast_list = []
     
     #Read in parameters for the breakfast request using the inputs
-    breakfast_parameters = {'term': 'breakfast',
-              'limit': days_input, # 1 breakfast per vacation day  
-              'offset': 50, #basically lets you do pages
-              'price': price_limit, #can change this later
-              'radius': 10000, #Change later?
-              'categories': food_preference,
-              #'categories': [{"alias":"Japanese", "title":"Japanese"}, {"alias":"Mexican", "title":"Mexican"}],
-              #'categories': "Italian, Japanese",
-              'location': destination,
-              'attributes':'good_for_breakfast',
-              }
+    #breakfast_parameters = {'term': 'breakfast',
+    #          'limit': days_input, # 1 breakfast per vacation day  
+    #          'offset': 50, #basically lets you do pages
+    #          'price': price_limit, #can change this later
+    #          'radius': 10000, #Change later?
+    #          'categories': food_preference,
+    #          'location': destination,
+    #          'attributes':'good_for_breakfast',
+    #          }
 
 
     # Make a request to the Yelp API for breakfast
-    breakfast_response = requests.get(url = link_endpoint,
-                            params = breakfast_parameters,
-                            headers = link_headers)
+    #breakfast_response = requests.get(url = link_endpoint,
+    #                        params = breakfast_parameters,
+    #                        headers = link_headers)
+
+    breakfast_term = 'breakfast'
+    breakfast_attribute = 'good_for_breakfast'
+    breakfast_response = get_request(breakfast_term, breakfast_attribute, destination, days_input, price_limit, food_preference)
 
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
 
     #LUNCH REQUEST
-    ###lunch_list = []
 
     #Read in parameters for the lunch request using the inputs
-    lunch_parameters = {'term': 'lunch',
-                'limit': days_input, 
-                'offset': 50, #basically lets you do pages
-                'price': price_limit, #can change this later
-                'radius': 10000, #Change later?
-                'categories': food_preference,
-                #'categories': [{"alias":"American", "title":"American"}],
-                #'categories': [{"alias":"Italian", "title":"Italian"}, {"alias":"Mexican", "title":"Mexican"}],
-                #'categories': "Italian, Japanese",
-                'location': destination,
-                'attributes':'good_for_lunch'
-                }
+    #lunch_parameters = {'term': 'lunch',
+    #            'limit': days_input, 
+    #            'offset': 50, #basically lets you do pages
+    #            'price': price_limit, #can change this later
+    #            'radius': 10000, #Change later?
+    #            'categories': food_preference,
+    #            'location': destination,
+    #            'attributes':'good_for_lunch'
+    #            }
 
     # Make a request to the Yelp API for lunch
-    lunch_response = requests.get(url = link_endpoint,
-                            params = lunch_parameters,
-                            headers = link_headers)
+    #lunch_response = requests.get(url = link_endpoint,
+    #                        params = lunch_parameters,
+    #                        headers = link_headers)
+
+    lunch_term = 'lunch'
+    lunch_attribute = 'good_for_lunch'
+    lunch_response = get_request(lunch_term, lunch_attribute, destination, days_input, price_limit, food_preference)
 
     # Convert the JSON String to a dictionary for lunch
     lunch_parsed_response = json.loads(lunch_response.text)
     lunch_businesses_list = lunch_parsed_response["businesses"]
 
     #DINNER REQUEST
-    ###dinner_list = []
 
     #Read in parameters for the dinner request using the inputs
-    dinner_parameters = {'term': 'dinner',
-              'limit': days_input, 
-              'offset': 50, #basically lets you do pages
-              'price': price_limit, #can change this later
-              'radius': 10000, #Change later?
-              'categories': food_preference,
-              #'categories': [{"alias":"American", "title":"American"}],
-              #'categories': [{"alias":"Japanese", "title":"Japanese"}, {"alias":"Mexican", "title":"Mexican"}],
-              #'categories': "Italian, Japanese",
-              'location': destination,
-              'attributes':'good_for_dinner'
-              }
+    #dinner_parameters = {'term': 'dinner',
+    #          'limit': days_input, 
+    #          'offset': 50, #basically lets you do pages
+    #          'price': price_limit, #can change this later
+    #          'radius': 10000, #Change later?
+    #          'categories': food_preference,
+    #          'location': destination,
+    #          'attributes':'good_for_dinner'
+    #          }
     # Make a request to the Yelp API for dinner
-    dinner_response = requests.get(url = link_endpoint,
-                            params = dinner_parameters,
-                            headers = link_headers)
+    #dinner_response = requests.get(url = link_endpoint,
+    #                        params = dinner_parameters,
+    #                        headers = link_headers)
 
+    dinner_term = 'dinner'
+    dinner_attribute = 'good_for_dinner'
+    dinner_response = get_request(dinner_term, dinner_attribute, destination, days_input, price_limit, food_preference)
+    
     # Convert the JSON String to a dictionary for breakfast
     dinner_parsed_response = json.loads(dinner_response.text)
     dinner_businesses_list = dinner_parsed_response["businesses"]
@@ -191,7 +215,7 @@ if __name__ == "__main__":
     food_list = []
     #Stop asking for food preference inputs when user says DONE
     while food_variable == True:
-        food_preference = input("What types of food do you like? (Select all that apply, say DONE when done) ...coffee, Chinese, American, Italian? " )
+        food_preference = input("What types of food do you like? (Select one at a time, say DONE when done) Chinese, American, Italian, Japanese, Mexican, and/or Mediterranean? " )
         food_list.append(food_preference.lower())
         if "done" in food_list:
             food_list.remove("done")
