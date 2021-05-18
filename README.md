@@ -30,7 +30,7 @@ pip install -r requirements.txt
 ```
 
 ## Setup
-Obtain an API Key from Yelp Fusion API (https://www.yelp.com/developers/documentation/v3/authentication) in order to issue a request. Follow the instructions on Yelp Fusion API to create an app to obtain the API Key. 
+Obtain an API Key from [Yelp Fusion API](https://www.yelp.com/developers/documentation/v3/authentication) in order to issue a request. Follow the instructions on Yelp Fusion API to create an app to obtain the API Key. 
 
  In the root directory of your local repository, create a new file called ".env", and store the API Key value in the ".env" file (replace "abc123" with the correct API Key):
  ```
@@ -39,11 +39,7 @@ Obtain an API Key from Yelp Fusion API (https://www.yelp.com/developers/document
 
 ## Usage 
 Run the program in the terminal:
-```sh
-python app/yelp.py
-or
-python -m app.yelp
-```
+`python app/yelp.py` or `python -m app.yelp`
 
 ## Web App
 Run the web app for a better user interface.
@@ -62,13 +58,14 @@ flask run
 ## Testing
 Running all tests: 
 ```
-`pytest`
+pytest
+
 # in CI mode:
 CI=true pytest
 ```
 
 ## Deploying
-Deploy to Heroku to host your own web app. Original instructions here (https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md)
+Deploy to Heroku to host your own web app. Original instructions via Prof. Rossetti [here] (https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md)
 
 ### Prerequisates and Setup
 Start by signing up for a Heroku account and installing the Heroku CLI.
