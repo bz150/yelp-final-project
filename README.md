@@ -45,6 +45,7 @@ Run the program in the terminal:
 
 ## Web App
 Run the web app for a better user interface. Use the following commands:
+
 Mac OS: 
 ```
 FLASK_APP=web_app flask run
