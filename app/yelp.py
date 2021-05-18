@@ -99,7 +99,6 @@ def get_response(destination, days_input, price_limit, food_preference):
     #BREAKFAST REQUEST
     #Get breakfast request using the correct term and attribute
     breakfast_term = 'breakfast'
-    #breakfast_attribute = 'good_for_breakfast'
     breakfast_response = get_request(breakfast_term, destination, days_input, price_limit, food_preference)
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
@@ -109,7 +108,6 @@ def get_response(destination, days_input, price_limit, food_preference):
     #LUNCH REQUEST
     #Get lunch request using the correct term and attribute
     lunch_term = 'lunch'
-    #lunch_attribute = 'good_for_lunch'
     lunch_response = get_request(lunch_term, destination, days_input, price_limit, food_preference)
 
     # Convert the JSON String to a dictionary for lunch
@@ -119,7 +117,6 @@ def get_response(destination, days_input, price_limit, food_preference):
     #DINNER REQUEST
     #Get dinner request using the correct term and attribute
     dinner_term = 'dinner'
-    #dinner_attribute = 'good_for_dinner'
     dinner_response = get_request(dinner_term, destination, days_input, price_limit, food_preference)
     
     # Convert the JSON String to a dictionary for dinner
