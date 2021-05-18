@@ -1,15 +1,13 @@
 # yelp-final-project
 
-A Python application intended to help travelers going on a vacation who need an itinerary of restauraunts to go to for each meal during a future trip, so that they have an easy way to plan a trip without having to search individually for each meal.
+Bon Appeteat is a Python application intended to help travelers going on a vacation who need an itinerary of restauraunts to go to for each meal during a future trip, so that they have an easy way to plan a trip without having to search individually for each meal.
 
-# Prerequisites
-
+## Prerequisites
   + Anaconda 3.7+
   + Python 3.7+
   + Pip
 
 ## Installation
-
 Fork this [remote repository](http://github.com/bz150/yelp-final-project) under your own control, then "clone" or download your remote copy onto your local computer.
 
 After cloning the repo, navigate there from the command-line:
@@ -40,28 +38,28 @@ Obtain an API Key from Yelp Fusion API (https://www.yelp.com/developers/document
  ```
 
 ## Usage 
-
-Run the program: 
+Run the program in the terminal:
 ```sh
-python app/yelp.py (or python -m app.yelp_app)
+python app/yelp.py
+or
+python -m app.yelp
 ```
+
 ## Web App
+Run the web app for a better user interface.
 
-Run the web app:
-
-# Mac OS: 
+### Mac OS: 
 ```
 FLASK_APP=web_app flask run
 ```
 
-# Windows OS: 
+### Windows OS: 
 ```
 export FLASK_APP=web_app 
 flask run
 ```
 
 ## Testing
-
 Running all tests: 
 ```
 `pytest`
@@ -70,4 +68,33 @@ CI=true pytest
 ```
 
 ## Deploying
+Deploy to Heroku to host your own web app. Original instructions here (https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md)
 
+### Prerequisates and Setup
+Start by signing up for a Heroku account and installing the Heroku CLI.
+
+Set up a server
+```
+heroku create yelp-app # choose your own, unique name
+```
+Verify that the app was created and that the local repo is linked to the Heroku address
+```
+heroku apps
+git remote -v
+```
+Server configuration
+```
+heroku config:set YELP_API_KEY = "____" # set env variable
+heroku config # make sure production environment was properly configured
+```
+Deploy to Heroku
+```
+git push heroku main
+```
+
+### Running the App
+Your web app should now run live on the server
+```
+heroku run bash # login to server
+exit # logout
+```
