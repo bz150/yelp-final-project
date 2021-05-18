@@ -69,7 +69,7 @@ CI=true pytest
 Deploy to Heroku to host your own web app. Original instructions via Prof. Rossetti [here](https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md).
 
 ### Prerequisites and Setup
-Start by signing up for a Heroku account and installing the Heroku CLI.
+Start by [signing up](https://signup.heroku.com/) for a Heroku account and [installing](https://github.com/prof-rossetti/intro-to-python/blob/main/notes/clis/heroku.md#installation) the Heroku CLI.
 
 Set up a server:
 ```
