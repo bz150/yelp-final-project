@@ -12,7 +12,7 @@ This app was created as part of the OPIM 244 class at Georgetown. Requirements a
 ## Installation
 Fork this [remote repository](http://github.com/bz150/yelp-final-project) under your own control, then "clone" or download your remote copy onto your local computer.
 
-After cloning the repo, navigate there from the command-line:
+Navigate to the repository from the command-line:
 
 ```sh
 cd yelp-final-project
@@ -68,7 +68,7 @@ CI=true pytest
 ## Deploying
 Deploy to Heroku to host your own web app. Original instructions via Prof. Rossetti [here](https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md).
 
-### Prerequisates and Setup
+### Prerequisites and Setup
 Start by signing up for a Heroku account and installing the Heroku CLI.
 
 Set up a server:
@@ -96,3 +96,5 @@ Your web app should now run live on the server. You can use the following comman
 heroku run bash # login to server
 exit # logout
 ```
+
+(Adapted from Professor Rossetti's markdown)

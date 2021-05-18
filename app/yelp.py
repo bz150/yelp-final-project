@@ -137,28 +137,12 @@ if __name__ == "__main__":
     breakfast_list = []
     lunch_list = []
     dinner_list = []
-    #def get_response(response_endpoint, response_parameters, response_headers):
-    #    # Make a request to the Yelp API
-    #    response = requests.get(url = response_endpoint,
-    #                            params = response_parameters,
-    #                            headers = response_headers)
-    #
-    #    # Conver the JSON String to a dictionary
-    #    parsed_response = json.loads(response.text)
-    #    businesses_list = parsed_response["businesses"]
-    #    return businesses_list
-    #
-
-    
-
-    #CAN POTENTIALLY TURN THE INPUTS INTO A FUNCTION
 
     #INPUTS - read in user inputs
     #Read in the user's destination and number of days for vacation
     destination = input("Where is the destination of your vacation? ")
     days = input("How many days is your vacation? ")
 
-    #
     # Capturing Errors for Price Limit inputs and validating input 
     while True: 
         price_limit = input("What is your price limit on any single meal ($, $$, $$$, or $$$$)? ")
@@ -170,9 +154,7 @@ if __name__ == "__main__":
             break
 
     
-    #for testing, change later
     #Create list for food preferences
-    #VALIDATE CATEGORY ENTRIES FROM USER (try / except function?)
     food_variable = True
     food_list = []
     #Stop asking for food preference inputs when user says DONE
@@ -205,25 +187,8 @@ if __name__ == "__main__":
     #CALLING THE REQUESTS FROM THE FUNCTION and reading into breakfast, lunch, dinner lists
     breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
 
-    #
+
     # OUPUT - BREAKFAST
-    #
-
-    #breakfast_list = []
-    #
-    #breakfast_parameters = {'term': 'breakfast',
-    #              'limit': vacation_days, # 1 breakfast per vacation day  
-    #              'offset': 50, #basically lets you do pages
-    #              'price': prices, #can change this later
-    #              'radius': 10000, #Change later?
-    #              'categories': food_list_structured,
-    #              'location': destination,
-    #              'attributes':'good_for_breakfast',
-    #              #'open_at':1620226800
-    #              }
-    #
-    #breakfast_list = get_response(link_endpoint, breakfast_parameters, link_headers)
-
     #Capturing errors for breakfast list if not enough results found
     while True: 
         if len(breakfast_list)==0:
@@ -234,12 +199,10 @@ if __name__ == "__main__":
     #Create list for breakfast list with titles of each output
     sorted_breakfast_list = [ ]
     #Go through breakfast list and add outputs to the sorted list
-
-    #for biz in breakfast_list: 
-    #    sorted_breakfast_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
-
     sorted_breakfast_list = sort_meal_list(breakfast_list)
 
+
+    # OUPUT - LUNCH
     #Capturing errors for lunch list if not enough results found
     while True: 
         if len(lunch_list)==0:
@@ -251,30 +214,10 @@ if __name__ == "__main__":
     #Create list for lunch with titles of each output
     sorted_lunch_list = [ ]
     #Go through lunch list and add outputs to the sorted list
-
-    #for biz in lunch_list: 
-    #    sorted_lunch_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
-
     sorted_lunch_list = sort_meal_list(lunch_list)
     
-    #
+    
     # OUPUT - DINNER
-    #
-
-    #dinner_list = []
-    #
-    #dinner_parameters = {'term': 'dinner',
-    #              'limit': vacation_days, 
-    #              'offset': 50, #basically lets you do pages
-    #              'price': prices, #can change this later
-    #              'radius': 10000, #Change later?
-    #              'categories': food_list_structured,
-    #              'location': destination,
-    #              'attributes':'good_for_dinner'
-    #              }
-    #
-    #dinner_list = get_response(link_endpoint, dinner_parameters, link_headers)
-
     #Capturing errors for dinner list if not enough results found
     while True: 
         if len(dinner_list)==0:
@@ -285,29 +228,11 @@ if __name__ == "__main__":
 
     #Create list for dinner with titles of each output
     sorted_dinner_list = [ ]
-
     #Go through dinner list and add outputs to the sorted list
-
-    #for biz in dinner_list: 
-    #    sorted_dinner_list.append("Restaurant: " + biz['name'] + " | Category: " + biz['categories'][0]['title'] + " | Location: " + biz['location']['address1'] + " | Rating: " + str(biz['rating']) + " | Price: " + biz['price'])
     sorted_dinner_list = sort_meal_list(dinner_list)
 
 
-
-    #WEB APP OUTPUT
-    #print(f"RUNNING THE WEATHER SERVICE IN {APP_ENV.upper()} MODE...")
-
-    #
     # FINAL OUTPUT BELOW
-    #Print final output
-    print(" breakfast")
-    print(sorted_breakfast_list)
-    print(" lunch")
-    print(sorted_lunch_list)
-    print(" dinner")
-    print(sorted_dinner_list)
-
-    #breakpoint()
 
     #Add outputs to a dictionary
     meals_data = {
@@ -316,64 +241,14 @@ if __name__ == "__main__":
         'Dinner': sorted_dinner_list
     }
 
-    #Turn outputs dictionary into a dataframe
+    #Turn outputs dictionary into a dataframe and display
     meal_itin_df = pd.DataFrame(meals_data)
     print(meal_itin_df)
 
     meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
 
-    #
-    # REFERENCE DATA STRUCTURE
-    #
-
-    #ENDPOINT = 'https://api.yelp.com/v3/businesses/{}'.format(business_id)
-
-    # Define a business ID
-    #business_id = '4AErMBEoNzbk7Q8g45kKaQ'
-    #unix_time = 1546047836
 
 
-    #for biz in business_data['businesses']:
-    #    print(biz['name'])
-    # print the response
-    #print(json.dumps(business_data, indent = 3))
 
 
-    # FULL LIST OF PARAMS
-
-    #PARAMETERS = {'term':'good food',
-    #    'location':'San Diego',
-    #    'latitude':32.7,
-    #    'longitude':-117,
-    #    'radius':10000,
-    #    'categories':'bars,french',
-    #    'locale':'en_US',
-    #    'limit':50,
-    #    'offset':150,
-    #    'sort_by':'best_match',
-    #    'price':'1',
-    #    'open_now':True,
-    #    'open_at':unix_time,
-    #    'attributes':'hot_and_new'
-    #    }
-
-    # Define my parameters of the search
-    # BUSINESS SEARCH PARAMETERS - EXAMPLE
-    #link_parameters = {'term': 'food',
-    #              'limit': 50,
-    #              'offset': 50, #basically lets you do pages
-    #              'radius': 10000,
-    #              'location': 'San Diego'}
-
-    # BUSINESS MATCH PARAMETERS - EXAMPLE
-    #PARAMETERS = {'name': 'Peets Coffee & Tea',
-    #              'address1': '7845 Highland Village Pl',
-    #              'city': 'San Diego',
-    #              'state': 'CA',
-    #              'country': 'US'}
-
-    #businesses = parsed_response["businesses"]
-    #business_data = response.json()
-    #print(parsed_response.keys())
-    #print(parsed_response)
 

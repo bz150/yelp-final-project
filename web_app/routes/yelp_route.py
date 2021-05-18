@@ -24,7 +24,6 @@ def yelp_results():
     elif request.method == "POST": # the form will send a POST
         print("FORM DATA:", dict(request.form))
         request_data = dict(request.form)
-        #request_list = request.form
 
     #Request the input information from the Yelp form
     destination = request_data.get("destination") or "New York"
@@ -36,7 +35,6 @@ def yelp_results():
     #Add prices to the price limit list
     for num in range(0,len(price)):
         price_limit.append(str(num + 1))
-    #Change this to categories
 
     #Request food preference information from separate checkboxes
     food_preference_1 = request_data.get("food_preference1") 
