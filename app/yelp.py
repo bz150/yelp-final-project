@@ -76,6 +76,7 @@ def get_request(term, destination, days_input, price_limit, food_preference):
     meal_response = requests.get(url = link_endpoint,
                             params = meal_parameters,
                             headers = link_headers)
+    print(meal_response)
     
     #Return the request
     return meal_response
