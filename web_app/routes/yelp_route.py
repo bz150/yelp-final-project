@@ -49,6 +49,7 @@ def yelp_results():
     #Create list to hold food preferences
     food_list = []
 
+
     #Only add to food preference list if the checkbox is checked
     if food_preference_1 != None:
         food_list.append(food_preference_1)
@@ -75,7 +76,7 @@ def yelp_results():
     
     #If none of the checkboxes are checked, use American food as a default category
     if len(food_list) == 0:
-        food_preference = "American"
+        food_preference = "american"
 
     #Ensure that food preferences start in lowercase to be successfully used in the API
     food_preference = food_preference.lower()
