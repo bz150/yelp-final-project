@@ -37,20 +37,19 @@ def sort_meal_list(meal_list):
 
 
 
-def get_request(term, attributes, destination, days_input, price_limit, food_preference):
+def get_request(term, destination, days_input, price_limit, food_preference):
     """
     Fetches restaurant information from the Yelp API for a given meal term, meal attribute, destination, number of days of vacation, price limit, and food preference.
 
     Params:
         term (str) the specific meal, like "breakfast"
-        attributes (str) the specific meal, like "good_for_breakfast"
         destination (str) the requested destination, like "New York"
         days_input (int) the number of days of the vacation, like 3
         price_limit (list) the requested list of prices to search going up to the price limit, like [1,2,3] (for $$$)
         food_preference (str) the requested food cuisine preferences, like "American, Chinese"
 
     Example:
-        breakfast_list, lunch_list, dinner_list = get_request(term="breakfast", attributes="good_for_breakfast",destination="New York", days_input=3, price_limit=[1,2,3], food_preference="American, Chinese")
+        breakfast_list, lunch_list, dinner_list = get_request(term="breakfast",destination="New York", days_input=3, price_limit=[1,2,3], food_preference="American, Chinese")
 
     Returns the request for a specific meal through "meal_response".
     """
@@ -69,7 +68,7 @@ def get_request(term, attributes, destination, days_input, price_limit, food_pre
               'radius': 10000, #Change later?
               'categories': food_preference,
               'location': destination,
-              'attributes': attributes,
+              'attributes': "good_for_" + term,
               }
     
     #Make a request to the Yelp API using the correct parameters
@@ -100,8 +99,8 @@ def get_response(destination, days_input, price_limit, food_preference):
     #BREAKFAST REQUEST
     #Get breakfast request using the correct term and attribute
     breakfast_term = 'breakfast'
-    breakfast_attribute = 'good_for_breakfast'
-    breakfast_response = get_request(breakfast_term, breakfast_attribute, destination, days_input, price_limit, food_preference)
+    #breakfast_attribute = 'good_for_breakfast'
+    breakfast_response = get_request(breakfast_term, destination, days_input, price_limit, food_preference)
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
@@ -110,8 +109,8 @@ def get_response(destination, days_input, price_limit, food_preference):
     #LUNCH REQUEST
     #Get lunch request using the correct term and attribute
     lunch_term = 'lunch'
-    lunch_attribute = 'good_for_lunch'
-    lunch_response = get_request(lunch_term, lunch_attribute, destination, days_input, price_limit, food_preference)
+    #lunch_attribute = 'good_for_lunch'
+    lunch_response = get_request(lunch_term, destination, days_input, price_limit, food_preference)
 
     # Convert the JSON String to a dictionary for lunch
     lunch_parsed_response = json.loads(lunch_response.text)
@@ -120,8 +119,8 @@ def get_response(destination, days_input, price_limit, food_preference):
     #DINNER REQUEST
     #Get dinner request using the correct term and attribute
     dinner_term = 'dinner'
-    dinner_attribute = 'good_for_dinner'
-    dinner_response = get_request(dinner_term, dinner_attribute, destination, days_input, price_limit, food_preference)
+    #dinner_attribute = 'good_for_dinner'
+    dinner_response = get_request(dinner_term, destination, days_input, price_limit, food_preference)
     
     # Convert the JSON String to a dictionary for dinner
     dinner_parsed_response = json.loads(dinner_response.text)
