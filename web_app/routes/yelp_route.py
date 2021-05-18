@@ -94,6 +94,7 @@ def yelp_results():
         else:
             flash(f"Input Error - No Results Found. Please try again with different inputs!", "danger")
             return redirect("/yelp/form")
+    #Return back to the yelp form if inputs are invalid and request can't be made
     except:
         flash(f"Input Error - No Results Found. Please try again with different inputs!", "danger")
         return redirect("/yelp/form")
