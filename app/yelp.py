@@ -97,27 +97,22 @@ def get_response(destination, days_input, price_limit, food_preference):
 
     Returns the restaurant information list for breakfast, lunch, and dinner through "breakfast_businesses_list", "lunch_businesses_list", "dinner_businesses_list" for the number of vacation days. 
     """
-
+    
     #BREAKFAST REQUEST
     #Get breakfast request using the correct term and attribute
     breakfast_term = 'breakfast'
-
     breakfast_response = get_request(breakfast_term, destination, days_input, price_limit, food_preference)
-
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
-
     
     #LUNCH REQUEST
     #Get lunch request using the correct term and attribute
     lunch_term = 'lunch'
     lunch_response = get_request(lunch_term, destination, days_input, price_limit, food_preference)
-
     # Convert the JSON String to a dictionary for lunch
     lunch_parsed_response = json.loads(lunch_response.text)
     lunch_businesses_list = lunch_parsed_response["businesses"]
-
     #DINNER REQUEST
     #Get dinner request using the correct term and attribute
     dinner_term = 'dinner'
@@ -126,9 +121,11 @@ def get_response(destination, days_input, price_limit, food_preference):
     # Convert the JSON String to a dictionary for dinner
     dinner_parsed_response = json.loads(dinner_response.text)
     dinner_businesses_list = dinner_parsed_response["businesses"]
-
     #Return separate breakfast, lunch, and dinner lists
     return breakfast_businesses_list, lunch_businesses_list, dinner_businesses_list
+
+       
+    
 
 
 if __name__ == "__main__":
@@ -183,72 +180,59 @@ if __name__ == "__main__":
     # Change the vacation days input into an integer
     vacation_days = int(days)
 
-
-    #CALLING THE REQUESTS FROM THE FUNCTION and reading into breakfast, lunch, dinner lists
-    breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
-
-
-    # OUPUT - BREAKFAST
-    #Capturing errors for breakfast list if not enough results found
-    while True: 
-        if len(breakfast_list)==0:
-            print("No results for your criteria were found. Please try again!")
-            break
-        else: 
-            break
-    #Create list for breakfast list with titles of each output
-    sorted_breakfast_list = [ ]
-    #Go through breakfast list and add outputs to the sorted list
-    sorted_breakfast_list = sort_meal_list(breakfast_list)
-
-
-    # OUPUT - LUNCH
-    #Capturing errors for lunch list if not enough results found
-    while True: 
-        if len(lunch_list)==0:
-            print("No results for your criteria were found. Please try again!")
-            break
-        else: 
-            break
-    
-    #Create list for lunch with titles of each output
-    sorted_lunch_list = [ ]
-    #Go through lunch list and add outputs to the sorted list
-    sorted_lunch_list = sort_meal_list(lunch_list)
-    
-    
-    # OUPUT - DINNER
-    #Capturing errors for dinner list if not enough results found
-    while True: 
-        if len(dinner_list)==0:
-            print("No results for your criteria were found. Please try again!")
-            break
-        else: 
-            break
-
-    #Create list for dinner with titles of each output
-    sorted_dinner_list = [ ]
-    #Go through dinner list and add outputs to the sorted list
-    sorted_dinner_list = sort_meal_list(dinner_list)
-
-
-    # FINAL OUTPUT BELOW
-
-    #Add outputs to a dictionary
-    meals_data = {
-        'Breakfast': sorted_breakfast_list, 
-        'Lunch': sorted_lunch_list, 
-        'Dinner': sorted_dinner_list
-    }
-
-    #Turn outputs dictionary into a dataframe and display
-    meal_itin_df = pd.DataFrame(meals_data)
-    print(meal_itin_df)
-
-    meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
-
-
-
-
-
+    try:
+        #CALLING THE REQUESTS FROM THE FUNCTION and reading into breakfast, lunch, dinner lists
+        breakfast_list, lunch_list, dinner_list = get_response(destination, vacation_days, prices, food_list_structured)
+        # OUPUT - BREAKFAST
+        #Capturing errors for breakfast list if not enough results found
+        while True: 
+            if len(breakfast_list)==0:
+                print("No results for your criteria were found. Please try again!")
+                break
+            else: 
+                break
+        #Create list for breakfast list with titles of each output
+        sorted_breakfast_list = [ ]
+        #Go through breakfast list and add outputs to the sorted list
+        sorted_breakfast_list = sort_meal_list(breakfast_list)
+        # OUPUT - LUNCH
+        #Capturing errors for lunch list if not enough results found
+        while True: 
+            if len(lunch_list)==0:
+                print("No results for your criteria were found. Please try again!")
+                break
+            else: 
+                break
+        
+        #Create list for lunch with titles of each output
+        sorted_lunch_list = [ ]
+        #Go through lunch list and add outputs to the sorted list
+        sorted_lunch_list = sort_meal_list(lunch_list)
+        
+        
+        # OUPUT - DINNER
+        #Capturing errors for dinner list if not enough results found
+        while True: 
+            if len(dinner_list)==0:
+                print("No results for your criteria were found. Please try again!")
+                break
+            else: 
+                break
+        #Create list for dinner with titles of each output
+        sorted_dinner_list = [ ]
+        #Go through dinner list and add outputs to the sorted list
+        sorted_dinner_list = sort_meal_list(dinner_list)
+        # FINAL OUTPUT BELOW
+        #Add outputs to a dictionary
+        meals_data = {
+            'Breakfast': sorted_breakfast_list, 
+            'Lunch': sorted_lunch_list, 
+            'Dinner': sorted_dinner_list
+        }
+        #Turn outputs dictionary into a dataframe and display
+        meal_itin_df = pd.DataFrame(meals_data)
+        print(meal_itin_df)
+        meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
+    except:
+        print("Invalid inputs, please try again! ")
 

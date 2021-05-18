@@ -79,18 +79,23 @@ def yelp_results():
     #Ensure that food preferences start in lowercase to be successfully used in the API
     food_preference = food_preference.lower()
 
-
-    #Get response from the original function using web app inputs
-    breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
-    
-    #If results are able to be found, then display outputs onto yelp results page
-    if breakfast_results and lunch_results and dinner_results:
-        flash(f"Yelp Results Generated Successfully!", "success")
-        return render_template("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
-    #Tell user if results are unable to be found
-    else:
+    try:
+        #Get response from the original function using web app inputs
+        breakfast_results, lunch_results, dinner_results = get_response(destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference)
+        
+        #If results are able to be found, then display outputs onto yelp results page
+        if breakfast_results and lunch_results and dinner_results:
+            flash(f"Yelp Results Generated Successfully!", "success")
+            return render_template("yelp_results.html", destination=destination, days_input=days_input, price_limit=price_limit, food_preference=food_preference, breakfast_results=breakfast_results, lunch_results=lunch_results, dinner_results=dinner_results)
+        #Tell user if results are unable to be found
+        #elif breakfast_results.status_code == 500 or lunch_results.status_code == 500 or dinner_results.status_code == 500:
+        #    flash(f"Input Error - No Results Found. Please try again with different inputs!", "danger")
+        #    return redirect("/yelp/form")
+        else:
+            flash(f"Input Error - No Results Found. Please try again with different inputs!", "danger")
+            return redirect("/yelp/form")
+    except:
         flash(f"Input Error - No Results Found. Please try again with different inputs!", "danger")
         return redirect("/yelp/form")
-
 
     
