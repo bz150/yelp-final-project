@@ -51,6 +51,7 @@ def get_request(term, destination, days_input, price_limit, food_preference):
     Example:
         breakfast_list, lunch_list, dinner_list = get_request(term="breakfast",destination="New York", days_input=3, price_limit=[1,2,3], food_preference="American, Chinese")
 
+
     Returns the request for a specific meal through "meal_response".
     """
     #ACQUIRE API KEY
@@ -100,7 +101,9 @@ def get_response(destination, days_input, price_limit, food_preference):
     #BREAKFAST REQUEST
     #Get breakfast request using the correct term and attribute
     breakfast_term = 'breakfast'
+
     breakfast_response = get_request(breakfast_term, destination, days_input, price_limit, food_preference)
+
     # Convert the JSON String to a dictionary for breakfast
     breakfast_parsed_response = json.loads(breakfast_response.text)
     breakfast_businesses_list = breakfast_parsed_response["businesses"]
