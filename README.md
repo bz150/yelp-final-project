@@ -65,7 +65,7 @@ CI=true pytest
 ```
 
 ## Deploying
-Deploy to Heroku to host your own web app. Original instructions via Prof. Rossetti [here] (https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md)
+Deploy to Heroku to host your own web app. Original instructions via Prof. Rossetti [here](https://github.com/bz150/daily-briefings-py/blob/main/DEPLOYING.md)
 
 ### Prerequisates and Setup
 Start by signing up for a Heroku account and installing the Heroku CLI.
