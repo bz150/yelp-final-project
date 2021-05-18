@@ -235,4 +235,3 @@ if __name__ == "__main__":
         meal_itin_df.columns = ["Breakfast", "Lunch", "Dinner"]
     except:
         print("Invalid inputs, please try again! ")
-
